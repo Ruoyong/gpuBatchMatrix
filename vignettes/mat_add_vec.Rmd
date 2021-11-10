@@ -1,0 +1,57 @@
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{matrix_add_vector}
+-->
+
+
+```{r test}
+library(gpuRandom)
+library(gpuR)
+type="double"
+nrow<-8
+ncol<-10
+x<-vclMatrix(1:80, nrow=nrow,ncol=ncol, type=type);      xcpu<-matrix(1:80, nrow=nrow,ncol=ncol)
+
+vr<-vclVector(1:8, type=type);        vrcpu <- as.vector(vr)
+vc<-vclVector(1:10,  type=type);       vccpu <- as.vector(vc)
+
+result <- vclMatrix(0, nrow=nrow,ncol=ncol, type=type)
+
+xcpu 
+vrcpu
+vccpu
+
+a <- xcpu +vrcpu
+a+vccpu
+
+gpuRandom:::matrix_vector_sumBackend(x,vr, vc, 10, result,  c(4,4))
+as.matrix(result)
+
+gpuRandom:::matrix_vector_sumBackend(3*log(x/2),vr, vc, 10, result,  c(4,4))
+as.matrix(result)
+
+
+```
+
+
+
+
+
+```{r test2}
+library(gpuRandom)
+library(gpuR)
+type="double"
+nrow<-8
+ncol<-10
+a<-vclMatrix(1:80, nrow=nrow,ncol=ncol, type=type);      acpu<-matrix(1:80, nrow=nrow,ncol=ncol)
+
+b<-vclMatrix(1:8, nrow=nrow, ncol=1, type=type);         bcpu <- as.matrix(b)
+#v2<-vclVector(3:12,  type=type);       vcpu <- as.vector(v2)
+
+result <- vclMatrix(0, nrow=nrow,ncol=ncol, type=type)
+
+r<-acpu+bcpu
+
+
+
+```
