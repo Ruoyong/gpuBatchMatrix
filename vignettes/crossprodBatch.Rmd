@@ -11,7 +11,7 @@ library('gpuR')
 
 ```{r crossprod_test10.10}
 library("gpuR")
-library("gpuRandom")
+library("gpuBatchMatrix")
 nrow = 20
 ncol=5
 A = matrix(0.01*sample(100, nrow*ncol, replace=TRUE),
@@ -39,7 +39,7 @@ realC = t(A)%*% solve(D1) %*%A
 realC[upper.tri(realC)] <- 0
 cpuC = do.call(rbind, replicate(Nparam, realC, simplify=FALSE))
 
-gpuRandom::crossprodBatch(gpuC, 
+gpuBatchMatrix::crossprodBatch(gpuC, 
                           gpuA, 
                           gpuD,
                           invertD = TRUE,
@@ -54,7 +54,7 @@ range(as.matrix(gpuC)-cpuC)
 
 ```{r crossprodbatch_more, eval=F}
 library("gpuR")
-library("gpuRandom")
+library("gpuBatchMatrix")
 
 
 D1 <- matrix(0,nrow=5, ncol=5)
@@ -75,7 +75,7 @@ gpuC<-vclMatrix(0, nrow=24, ncol=3,type="float")
 gpuA<-vclMatrix(rbind(a,a,a,a,a,a,a,a),type="float")
 gpuD<-vclMatrix(rbind(diag(D1),diag(D2),diag(D1),diag(D2),diag(D1),diag(D2),diag(D1),diag(D2)), nrow=8,ncol=nrow(D2),type='float')
 
-gpuRandom::crossprodBatch(gpuC, 
+gpuBatchMatrix::crossprodBatch(gpuC, 
                           gpuA,
                           gpuD,
                           invertD = FALSE,
@@ -90,7 +90,7 @@ as.matrix(gpuC)
 
 ```{r checkAug26, eval=FALSE}
 library("gpuR")
-library("gpuRandom")
+library("gpuBatchMatrix")
 
 
 D1 <- matrix(0,nrow=5, ncol=5)
@@ -112,7 +112,7 @@ gpuC<-vclMatrix(0, nrow=24, ncol=3,type="double")
 gpuA<-vclMatrix(rbind(a,a,a,a,a,a,a,a),type="double")
 gpuD<-vclMatrix(rbind(diag(D1),diag(D2),diag(D1),diag(D2),diag(D1),diag(D2),diag(D1),diag(D2)), nrow=8,ncol=nrow(D2),type='double')
 
-gpuRandom::crossprodBatch(gpuC, 
+gpuBatchMatrix::crossprodBatch(gpuC, 
                           gpuA,
                           gpuD,
                           invertD = FALSE,

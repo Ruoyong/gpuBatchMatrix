@@ -5,7 +5,7 @@
 
 
 ```{r test}
-library(gpuRandom)
+library(gpuBatchMatrix)
 library(gpuR)
 type="double"
 nrow<-8
@@ -24,10 +24,10 @@ vccpu
 a <- xcpu +vrcpu
 a+vccpu
 
-gpuRandom:::matrix_vector_sumBackend(x,vr, vc, 10, result,  c(4,4))
+gpuBatchMatrix:::matrix_vector_sumBackend(x,vr, vc, 10, result,  c(4,4))
 as.matrix(result)
 
-gpuRandom:::matrix_vector_sumBackend(3*log(x/2),vr, vc, 10, result,  c(4,4))
+gpuBatchMatrix:::matrix_vector_sumBackend(3*log(x/2),vr, vc, 10, result,  c(4,4))
 as.matrix(result)
 
 
@@ -38,7 +38,7 @@ as.matrix(result)
 
 
 ```{r test2}
-library(gpuRandom)
+library(gpuBatchMatrix)
 library(gpuR)
 type="double"
 nrow<-8

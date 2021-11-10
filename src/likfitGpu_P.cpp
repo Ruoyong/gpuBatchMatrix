@@ -1,4 +1,3 @@
-// likfitGpu_p 9.30 10pm version
 #include "lgmlikFit.hpp"
 
 

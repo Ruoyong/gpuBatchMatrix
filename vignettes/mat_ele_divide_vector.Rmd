@@ -5,7 +5,7 @@
 
 
 ```{r test}
-library(gpuRandom)
+library(gpuBatchMatrix)
 library(gpuR)
 type="double"
 nrow<-8
@@ -24,7 +24,7 @@ vrcpu
 xcpu/vrcpu
 
 
-gpuRandom:::mat_vec_eledivideBackend(x, vr, result,  c(4,4))
+gpuBatchMatrix:::mat_vec_eledivideBackend(x, vr, result,  c(4,4))
 as.matrix(result)
 
 

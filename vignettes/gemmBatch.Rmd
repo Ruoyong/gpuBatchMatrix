@@ -66,13 +66,13 @@ gpuAt<-vclMatrix(At,type="float")
 outputC<-vclMatrix(0, nrow=8, ncol=8, type="float")
 Nglobal = c(16,8,4) 
 
-gpuRandom:::gemmBatchBackend(gpuA, gpuB, outputC, 4L, 4L,2L, 2L, FALSE, Nglobal)
+gpuBatchMatrix:::gemmBatchBackend(gpuA, gpuB, outputC, 4L, 4L,2L, 2L, FALSE, Nglobal)
 as.matrix(outputC)
 
 
 
 outputC2<-vclMatrix(0, nrow=8, ncol=8, type="float")
-gpuRandom:::gemmBatchBackend(gpuAt, gpuB, outputC2, 4L, 4L,2L, 2L, TRUE, Nglobal)
+gpuBatchMatrix:::gemmBatchBackend(gpuAt, gpuB, outputC2, 4L, 4L,2L, 2L, TRUE, Nglobal)
 as.matrix(outputC2)
 
 
@@ -92,16 +92,16 @@ gpuB1<-vclMatrix(B1,type="float")
 gpuA1<-vclMatrix(A1, type="float")
 gpuA1t<-vclMatrix(A1t, type="float")
 #outputC3<-vclMatrix(0, nrow=8, ncol=8, type="float")
-#gpuRandom:::gemmBatchBackend(gpuA, gpuB1, outputC3, 4L, 2L, 1L, FALSE, Nglobal)
+#gpuBatchMatrix:::gemmBatchBackend(gpuA, gpuB1, outputC3, 4L, 2L, 1L, FALSE, Nglobal)
 #as.matrix(outputC3)
 
-C4<-gpuRandom::gemmBatch(gpuA, gpuB1, 4L, 4L,2L, 1L, FALSE, Nglobal)
+C4<-gpuBatchMatrix::gemmBatch(gpuA, gpuB1, 4L, 4L,2L, 1L, FALSE, Nglobal)
 as.matrix(C4)
 
-C5<-gpuRandom::gemmBatch(gpuA1, gpuB, 4L, 4L,1L, 2L, FALSE, Nglobal)
+C5<-gpuBatchMatrix::gemmBatch(gpuA1, gpuB, 4L, 4L,1L, 2L, FALSE, Nglobal)
 as.matrix(C5)
 
-C6<-gpuRandom::gemmBatch(gpuA1t, gpuB, 4L, 4L, 1L, 2L, TRUE, Nglobal)
+C6<-gpuBatchMatrix::gemmBatch(gpuA1t, gpuB, 4L, 4L, 1L, 2L, TRUE, Nglobal)
 as.matrix(C6)
 
 a11%*%b11
@@ -140,13 +140,13 @@ gpuA<-vclMatrix(A, type="float")
 outputC<-vclMatrix(0, nrow=8, ncol=8, type="float")
 Nglobal = c(16,8,4) 
 
-C4<-gpuRandom::gemmBatch(gpuA, gpuB, 4L, 1L,2L, 2L, FALSE, Nglobal)
+C4<-gpuBatchMatrix::gemmBatch(gpuA, gpuB, 4L, 1L,2L, 2L, FALSE, Nglobal)
 as.matrix(C4)
 
-C5<-gpuRandom::gemmBatch(gpuA1, gpuB, 4L, 4L,1L, 2L, FALSE, Nglobal)
+C5<-gpuBatchMatrix::gemmBatch(gpuA1, gpuB, 4L, 4L,1L, 2L, FALSE, Nglobal)
 as.matrix(C5)
 
-C6<-gpuRandom::gemmBatch(gpuA1t, gpuB, 4L, 4L, 1L, 2L, TRUE, Nglobal)
+C6<-gpuBatchMatrix::gemmBatch(gpuA1t, gpuB, 4L, 4L, 1L, 2L, TRUE, Nglobal)
 as.matrix(C6)
 
 a11%*%b11
@@ -164,7 +164,7 @@ a42%*%b12
 
 
 ```{r testBatcchLocal, eval=FALSE}
-library("gpuRandom")
+library("gpuBatchMatrix")
 dimA = c(8,8)
 dimB = c(10,8)
 gpuA = vclMatrix(matrix(seq(1, prod(dimA)), 
@@ -201,7 +201,7 @@ BB
 
 
 ```{r testBatcchLocal2, eval=FALSE}
-library("gpuRandom")
+library("gpuBatchMatrix")
 library("gpuR")
 dima = c(3,6)
 dimb = c(6,4)

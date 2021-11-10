@@ -1,7 +1,3 @@
-//9.13   3pm
-
-
-
 /*
  Rcpp::IntegerVector workgroupSize,   // global 0 1 2, local 0 1 2
  Rcpp::IntegerVector transposeABC, // transposeA, transposeB, transposeC

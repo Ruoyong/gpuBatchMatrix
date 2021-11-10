@@ -5,7 +5,7 @@
 
 ```{r makeplots,eval=TRUE}
 # isotropic
-library(gpuRandom)
+library(gpuBatchMatrix)
 library(gpuR)
 library('geostatsp')
 data('swissRain')
@@ -38,12 +38,12 @@ otherparams = matrix(rep(otherparams,each=nrow(newParam)),nrow=nrow(newParam))
 colnames(otherparams) <- c("shape", "variance", "anisoRatio", "anisoAngleRadians")
 
 paramsBatch0 = cbind(newParam, otherparams)
-paramsGpu = gpuRandom::maternGpuParam(paramsBatch0, type="double")
+paramsGpu = gpuBatchMatrix::maternGpuParam(paramsBatch0, type="double")
 
 type = "double"
 
 
-result<-gpuRandom::likfitGpu(spatialmodel,     #data,
+result<-gpuBatchMatrix::likfitGpu(spatialmodel,     #data,
                                type = "double",
                                paramsGpu, #a vclmatrix, consists of all the parameters#betas=NULL, #a vclmatrix  #only one row batch, but many colbatches
                                BoxCox=c(1,0), # an R vector, will always be c(1,0,.....)
@@ -89,7 +89,7 @@ as.matrix(result$XVYXVX)
 ```{r likfit_givenBeta10.31}
 Betas <- t(expand.grid(intercept = seq(3,4,len=5), elevation = 5.4e-05))
 
-result2<-gpuRandom::likfit_givenBeta(Betas = Betas,
+result2<-gpuBatchMatrix::likfit_givenBeta(Betas = Betas,
                                      variances = paramsBatch0[,4],
                                      Nobs = 100,
                                      detVar=result$detVar,
@@ -124,7 +124,7 @@ result2$index
 
 
 ```{r test10.5, eval=FALSE}
-library(gpuRandom)
+library(gpuBatchMatrix)
 library(gpuR)
 library('geostatsp')
 data('swissRain')
@@ -148,7 +148,7 @@ colnames(otherparams) <- c("shape", "variance", "anisoRatio", "anisoAngleRadians
 
 paramsBatch0 = cbind(newParam, otherparams)
 paramsBatch0 = t(apply(paramsBatch0, 1, geostatsp::fillParam))
-#paramsGpu = gpuRandom::maternGpuParam(paramsBatch0, type="double")
+#paramsGpu = gpuBatchMatrix::maternGpuParam(paramsBatch0, type="double")
 paramsBatch0=cbind(paramsBatch0, matrix(0, nrow(paramsBatch0),22-ncol(paramsBatch0)))
 paramsGpu = gpuR::vclMatrix(paramsBatch0,type="double")
 
@@ -213,7 +213,7 @@ cholXVXdiag = vclMatrix(0, NparamPerIter, Ncov, type=type)
 cholDiagMat = vclMatrix(0, NparamPerIter, nrow(yx), type=type)
 b_beta = vclMatrix(0, NparamPerIter*nrow(yx), Ndata, type=type)
 
-gpuRandom:::likfitGpu_BackendP(
+gpuBatchMatrix:::likfitGpu_BackendP(
   yx,  #1
   coords,
   paramsGpu,
