@@ -1,13 +1,13 @@
-#' @title crossprodBatch function on GPU
-#'
-#' @param A rectangular matrices
-#' @param D rectangular matrix, columns are diagonals
+#' @title crossprodBatch
+#' @description computes C = t(A) A or t(A) D' A or t(A) D'^(-1) A in batches on a GPU
+#' @param C a vclMatrix on GPU, square matrices batches
+#' @param A a vclMatrix on GPU, rectangular matrix batches
+#' @param D a vclMatrix on GPU, rectangular matrix batches, rows are diagonals of D', stacked row-wise 
 #' @param invertD set to 1 for C = t(A) D^(-1) A
 #' @param Nglobal vector of number of global work items
 #' @param Nlocal vector of number of local work items
 #' @param NlocalCache elements in local cache
-#' 
-#' @return  C = A^T A or A^T D A or A^T D^(-1) A, output matrices, stacked row-wise 
+#' @note computed results are stored in C, no returned objects
 #' @useDynLib gpuBatchMatrix
 #' @export
 

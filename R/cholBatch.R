@@ -1,10 +1,14 @@
-#' @title Backsolve function on GPU
-#'
-#' @param A a vclMatrix, positive definite
-#' @param D a vclMatrix, diagonal elements of LDL^t 
-#' @param numbatchD number of batches in D
-#' 
-#' @return  vclMatrix L and D that satisfies A=LDL^T
+#' @title cholBatch
+#' @description performs Cholesky decomposition in batches on A = L D' L^t on a GPU
+#' @param A a vclMatrix on GPU, positive definite
+#' @param D a vclMatrix on GPU, each row contains diagonal elements of D' 
+#' @param numbatchD number of matrix batches in D
+#' @param Nglobal Size of the index space for use
+#' @param Nlocal Work group size of the index space
+#' @param NlocalCache local memory cached
+#' @param Astartend a vector that selects the range of A, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0
+#' @param Dstartend a vector that selects the range of D,
+#' @note computed L and D' are stored in A and D respectively, no returned objects
 #' @useDynLib gpuBatchMatrix
 #' @export
 

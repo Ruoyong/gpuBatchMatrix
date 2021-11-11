@@ -1,11 +1,17 @@
-#' @title Backsolve function on GPU
-#'
-#' @param C a vclMatrix
-#' @param A a vclMatrix, unit lower triangular
-#' @param B a vclMatrix 
-#' @param numbatchB number of batches in B
-#' @param diagIsOne logical, indicates if all the diagonal entries in A are one
-#' @return a vclMatrix C that satisfies A*C=B
+#' @title backsolveBatch
+#' @description solve A * C = B for C on a GPU, where A, B, C are batches of square matrices
+#' @param C an object of class 'vclMatrix'
+#' @param A an object of class 'vclMatrix', upper triangular values are 0
+#' @param B an object of class 'vclMatrix', batches of rectangular matrices
+#' @param numbatchB number of batches in B, if 1 then B has the same matrix for all matrices in A batch
+#' @param diagIsOne logical, indicates if all the diagonal entries in A matrices are 1
+#' @param Nglobal Size of the index space for use
+#' @param Nlocal Work group size of the index space
+#' @param NlocalCache local memory cached
+#' @param Cstartend a vector that selects the range of C, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0
+#' @param Astartend a vector that selects the range of A, 
+#' @param Bstartend a vector that selects the range of B, 
+#' @note result matrices are stored in C respectively, no returned objects
 #' @useDynLib gpuBatchMatrix
 #' @export
 

@@ -1,60 +1,52 @@
-#' @title Gemmbatch on GPU
-#'
-#' @param A a vclMatrix consists of batches of submatrices
-#' @param B a vclMatrix consists of batches of submatrices
-#' @param rowbatch number of batches in row
-#' @param Acolbatch number of batches in the column of A
-#' @param Bcolbatch number of batches in the column of B
-#' 
-#' @return a vclMatrix of submatrices multiplication results
+#' @title gemmBatch
+#' @description Multiplies a rectangular matrix by a rectangular matrix in row and column batches
+#' @param A a "vclMatrix" consists of batches of matrices
+#' @param B a "vclMatrix" consists of batches of matrices
+#' @param C a "vclMatrix" consists of batches of matrices
+#' @param transposeABC a vector of 1 or 0, 1 indicates transpose the matrices, e.g., c(0,0,0)
+#' @param submatrixA a vector that indicates the range of each submatrix of A, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)
+#' @param submatrixB a vector that indicates the range of each submatrix of B, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)
+#' @param submatrixC a vector that indicates the range of each submatrix of C, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)
+#' @param batches a vector that contains c(nRowBatch, nColBatch, recycleArow, recycleAcol, recycleBrow, recycleBcol), recycleArow=1 indicates there are no row batches for A, use the same A for all batches
+#' @param workgroupSize vector of six numbers, number of global work items and local work items,
+#' @param NlocalCache a vector, c(cacheSizeA, cacheSizeB)
+#' @note computed results are stored in C, no returned objects, if A and B have different row batches, then one of them must have only 1 row batch 
 #' @useDynLib gpuBatchMatrix
 #' @export
 
 
 
 gemmBatch <- function(
-  A, B,  #vclmatrices
-  Arowbatch, Browbatch,
-  Acolbatch, Bcolbatch,
-  need_transpose,
+  A, B, C #vclmatrices
+  transposeABC,
+  submatrixA,
+  submatrixB,
+  submatrixC,
+  batches, 
   workgroupSize,
+  NlocalCache,
   verbose=FALSE){
   
   
-  if( (Arowbatch != Browbatch) & (Browbatch != 1)) 
-    stop("A and B must have same number of blocks in row or B can have only one block in row sometimes") 
-  
-  if( (Arowbatch != Browbatch) & ((Acolbatch != Bcolbatch))) 
-    stop("A and B must have same number of row batches or A and B must have same number of col batches") 
-  
-  if((Acolbatch != Bcolbatch) & (Bcolbatch != 1) & (Acolbatch != 1))
-    stop("A and B must have same number of blocks in column or either A or B can have only one block in column")
-  
+
   if(missing(workgroupSize)) {
-    workgroupSize <- c(64,8,8)
+    workgroupSize <- c(64,8,2, 1, 4, 1)
   }
   
-  localSize = c(1, 1, 1)
+  workgroupSize[4]=1
   
   if(verbose){ message(paste('global work items', workgroupSize, 
                              'local work items', localSize))}
-  
-  
-  x <- max(c(Acolbatch,Bcolbatch))
-  
-  if (need_transpose){
-  C = vclMatrix(data=0, ncol(A)/Acolbatch*Arowbatch, ncol(B)/Bcolbatch*x, type=gpuR::typeof(A))
-  }else{
-  C = vclMatrix(data=0, nrow(A), ncol(B)/Bcolbatch*x, type=gpuR::typeof(A))  
-  }
 
   
-  gemmBatchBackend(A, B, C,  
-                   Arowbatch, Browbatch, Acolbatch, Bcolbatch,
-                   need_transpose,  workgroupSize)
-  
-  
-  C
+  gemmBatch2backend(A,B,C,transposeABC,  
+                    submatrixA,
+                    submatrixB,
+                    submatrixC, 
+                    batches, 
+                    workgroupSize,   
+                    NlocalCache,
+                    verbose)
   
   }
 

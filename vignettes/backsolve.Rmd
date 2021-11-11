@@ -73,11 +73,9 @@ b1 = a1%*%c1
 c2=solve(a2,b1)
 
 A <- rbind(a1,a2)
-#A
 B <- b1
-#B
 C <- rbind(c1,c2)
-C
+A;B;C
 gpuA <- vclMatrix(A, type="double")
 gpuB <- vclMatrix(B, type="double")
 gpuC2 <- vclMatrix(0,nrow=6, ncol=1, type="double")
