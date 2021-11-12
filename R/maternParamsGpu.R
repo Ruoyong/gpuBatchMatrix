@@ -1,5 +1,6 @@
-#' @title Create matern Params on GPU
-#'
+#' @title maternGpuParam
+#' @description Create parameters be used by maternBatch on GPU
+#' @param x R matrix of covariance parameters 
 #' @useDynLib gpuBatchMatrix
 #' @export
 
