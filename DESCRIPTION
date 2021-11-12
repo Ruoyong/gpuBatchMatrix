@@ -1,9 +1,9 @@
 Package: gpuBatchMatrix
 Version: 0.1
 Date: 2019-09-14
-Title: Random numbers with GPU
+Title: matrices operations in batches with GPU
 Author: Patrick Brown, Ruoyong Xu
-Description: Random numbers on the gpu
+Description: matrices operations in batches on GPU in R
 Maintainer: Ruoyong Xu <ruoyong.xu@mail.utoronto.ca>
 License: GPL (>= 2)
 Encoding: UTF-8
