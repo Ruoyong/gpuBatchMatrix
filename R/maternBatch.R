@@ -13,31 +13,39 @@
 
 
 
-maternBatch <- function(var,  # the output matern matrices
+maternBatch <- function(param, #22 columns 
                         coords,
-                        param, #22 columns 
+                        var,  # the output matern matrices
                         Nglobal,
                         Nlocal,
                         startrow,   # new added
                         numberofrows){
   
-  
+if('SpatialPoints' %in% names(coords)) {
+  coords = vclMatrix(coords@coords, 
+                     type = c('float','double')[1+gpuInfo()$double_support])
+}
+    
+if(is.matrix(param)) {
+  param = maternGpuParam(param,  type = gpuR::typeof(coords))
+}  
   
   if(missing(startrow) | missing(numberofrows)) {
     startrow=0
     numberofrows=nrow(param)
   }
   
-  
+if(missing(var)) {
+  var = vclMatrix(0, nrow(coords)*numberofrows, nrow(coords), 
+                  type = gpuR::typeof(coords))
+}  
   
   maternBatchBackend(var, coords, param,
                      Nglobal, Nlocal,
                      startrow, numberofrows)
   
-  
-  invisible()
-  
-  
+  invisible(var)
+
 }
 
 

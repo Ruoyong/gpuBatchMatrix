@@ -19,12 +19,14 @@ cholBatch <- function(A,
                       numbatchD,
                       Nglobal,
                       Nlocal,   # needs Nglobal[2]=Nlocal[2]
-                      NlocalCache,
+                      NlocalCache = gpuR::gpuInfo()$localMem/16,
                       Astartend,
                       Dstartend,
                       verbose=FALSE){
   
-
+  if(missing(D)) {
+    D = vclMatrix(0, ncol(A)/nrow(A), ncol(A), type = gpuR::typeof(A))
+  }
   
   if(missing(Astartend)) {
     Astartend=c(0, nrow(A)/numbatchD, 0, ncol(A))
@@ -57,7 +59,7 @@ cholBatch <- function(A,
 
 
    #theResult
-   invisible()
+   invisible(D)
   
   
 }
