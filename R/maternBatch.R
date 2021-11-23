@@ -22,10 +22,12 @@ maternBatch <- function(param, #22 columns
                         numberofrows){
   
 if('SpatialPoints' %in% names(coords)) {
-  coords = vclMatrix(coords@coords, 
-                     type = c('float','double')[1+gpuInfo()$double_support])
+  coords = coords@coords
 }
-    
+  if(is.matrix(coords)) {
+  coords = vclMatrix(coords, 
+                     type = c('float','double')[1+gpuInfo()$double_support])
+  }  
 if(is.matrix(param)) {
   param = maternGpuParam(param,  type = gpuR::typeof(coords))
 }  
