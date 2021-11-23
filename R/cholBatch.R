@@ -2,7 +2,6 @@
 #' @description performs Cholesky decomposition in batches on A = L D' L^t on a GPU
 #' @param A a vclMatrix on GPU, positive definite
 #' @param D a vclMatrix on GPU, each row contains diagonal elements of D' 
-#' @param numbatchD number of matrix batches in D
 #' @param Nglobal Size of the index space for use
 #' @param Nlocal Work group size of the index space
 #' @param NlocalCache local memory cached
@@ -16,7 +15,7 @@
 
 cholBatch <- function(A,
                       D,
-                      numbatchD,
+#                      numbatchD,
                       Nglobal,
                       Nlocal,   # needs Nglobal[2]=Nlocal[2]
                       NlocalCache = gpuR::gpuInfo()$localMem/16,
@@ -27,6 +26,7 @@ cholBatch <- function(A,
   if(missing(D)) {
     D = vclMatrix(0, ncol(A)/nrow(A), ncol(A), type = gpuR::typeof(A))
   }
+  numbatchD = nrow(D)
   
   if(missing(Astartend)) {
     Astartend=c(0, nrow(A)/numbatchD, 0, ncol(A))
