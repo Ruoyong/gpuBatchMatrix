@@ -21,6 +21,15 @@ maternBatch <- function(param, #22 columns
                         startrow,   # new added
                         numberofrows){
   
+  if(any("raster" %in% attributes(class(myRaster))$package ) ) {
+    if(requireNamespace("raster")) {
+      coords = raster::xyFromCell(coords, 1:ncell(coords))
+    } else {
+      stop("install the raster package to use these coordinates")
+    }
+    
+  }
+
 if('SpatialPoints' %in% names(coords)) {
   coords = coords@coords
 }
