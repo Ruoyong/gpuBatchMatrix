@@ -2,7 +2,7 @@
 % Please edit documentation in R/crossprodBatch.R
 \name{crossprodBatch}
 \alias{crossprodBatch}
-\title{crossprodBatch function on GPU}
+\title{crossprodBatch}
 \usage{
 crossprodBatch(
   C,
@@ -18,9 +18,11 @@ crossprodBatch(
 )
 }
 \arguments{
-\item{A}{rectangular matrices}
+\item{C}{a vclMatrix on GPU, square matrices batches}
 
-\item{D}{rectangular matrix, columns are diagonals}
+\item{A}{a vclMatrix on GPU, rectangular matrix batches}
+
+\item{D}{a vclMatrix on GPU, rectangular matrix batches, rows are diagonals of D', stacked row-wise}
 
 \item{invertD}{set to 1 for C = t(A) D^(-1) A}
 
@@ -30,9 +32,9 @@ crossprodBatch(
 
 \item{NlocalCache}{elements in local cache}
 }
-\value{
-C = A^T A or A^T D A or A^T D^(-1) A, output matrices, stacked row-wise
-}
 \description{
-crossprodBatch function on GPU
+computes C = t(A) A or t(A) D' A or t(A) D'^(-1) A in batches on a GPU
+}
+\note{
+computed results are stored in C, no returned objects
 }

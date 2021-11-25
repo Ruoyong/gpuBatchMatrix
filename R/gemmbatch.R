@@ -17,7 +17,7 @@
 
 
 gemmBatch <- function(
-  A, B, C #vclmatrices
+  A, B, C, #vclmatrices
   transposeABC,
   submatrixA,
   submatrixB,

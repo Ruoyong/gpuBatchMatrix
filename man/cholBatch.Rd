@@ -2,30 +2,37 @@
 % Please edit documentation in R/cholBatch.R
 \name{cholBatch}
 \alias{cholBatch}
-\title{Backsolve function on GPU}
+\title{cholBatch}
 \usage{
 cholBatch(
   A,
   D,
-  numbatchD,
   Nglobal,
   Nlocal,
-  NlocalCache,
+  NlocalCache = gpuR::gpuInfo()$localMem/16,
   Astartend,
   Dstartend,
   verbose = FALSE
 )
 }
 \arguments{
-\item{A}{a vclMatrix, positive definite}
+\item{A}{a vclMatrix on GPU, positive definite}
 
-\item{D}{a vclMatrix, diagonal elements of LDL^t}
+\item{D}{a vclMatrix on GPU, each row contains diagonal elements of D'}
 
-\item{numbatchD}{number of batches in D}
-}
-\value{
-vclMatrix L and D that satisfies A=LDL^T
+\item{Nglobal}{Size of the index space for use}
+
+\item{Nlocal}{Work group size of the index space}
+
+\item{NlocalCache}{local memory cached}
+
+\item{Astartend}{a vector that selects the range of A, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0}
+
+\item{Dstartend}{a vector that selects the range of D,}
 }
 \description{
-Backsolve function on GPU
+performs Cholesky decomposition in batches on A = L D' L^t on a GPU
+}
+\note{
+computed L and D' are stored in A and D respectively, no returned objects
 }

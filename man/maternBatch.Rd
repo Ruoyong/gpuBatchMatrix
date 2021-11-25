@@ -2,10 +2,28 @@
 % Please edit documentation in R/maternBatch.R
 \name{maternBatch}
 \alias{maternBatch}
-\title{maternBatch function on GPU}
+\title{maternBatch}
 \usage{
-maternBatch(var, coords, param, Nglobal, Nlocal, startrow, numberofrows)
+maternBatch(param, coords, var, Nglobal, Nlocal, startrow, numberofrows)
+}
+\arguments{
+\item{param}{a vclMatrix on GPU, matrix of paramters in batches, each row is a set of parameters}
+
+\item{coords}{a vclMatrix on GPU, rectangular matrix batches}
+
+\item{var}{a vclMatrix on GPU, consists of the output matern matrices in batches}
+
+\item{Nglobal}{vector of number of global work items}
+
+\item{Nlocal}{vector of number of local work items}
+
+\item{startrow}{starting row of parameter matrix}
+
+\item{numberofrows}{number of rows for computation}
 }
 \description{
-maternBatch function on GPU
+computes matern covariance matrices in batches on a GPU
+}
+\note{
+computed results are stored in var, no returned objects
 }

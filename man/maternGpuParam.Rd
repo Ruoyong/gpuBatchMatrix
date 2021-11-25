@@ -2,10 +2,13 @@
 % Please edit documentation in R/maternParamsGpu.R
 \name{maternGpuParam}
 \alias{maternGpuParam}
-\title{Create matern Params on GPU}
+\title{maternGpuParam}
 \usage{
 maternGpuParam(x, type = "double")
 }
+\arguments{
+\item{x}{R matrix of covariance parameters}
+}
 \description{
-Create matern Params on GPU
+Create parameters be used by maternBatch on GPU
 }

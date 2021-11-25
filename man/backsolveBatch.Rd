@@ -2,7 +2,7 @@
 % Please edit documentation in R/backsolve.R
 \name{backsolveBatch}
 \alias{backsolveBatch}
-\title{Backsolve function on GPU}
+\title{backsolveBatch}
 \usage{
 backsolveBatch(
   C,
@@ -20,19 +20,31 @@ backsolveBatch(
 )
 }
 \arguments{
-\item{C}{a vclMatrix}
+\item{C}{an object of class 'vclMatrix'}
 
-\item{A}{a vclMatrix, unit lower triangular}
+\item{A}{an object of class 'vclMatrix', upper triangular values are 0}
 
-\item{B}{a vclMatrix}
+\item{B}{an object of class 'vclMatrix', batches of rectangular matrices}
 
-\item{numbatchB}{number of batches in B}
+\item{numbatchB}{number of batches in B, if 1 then B has the same matrix for all matrices in A batch}
 
-\item{diagIsOne}{logical, indicates if all the diagonal entries in A are one}
-}
-\value{
-a vclMatrix C that satisfies A*C=B
+\item{diagIsOne}{logical, indicates if all the diagonal entries in A matrices are 1}
+
+\item{Nglobal}{Size of the index space for use}
+
+\item{Nlocal}{Work group size of the index space}
+
+\item{NlocalCache}{local memory cached}
+
+\item{Cstartend}{a vector that selects the range of C, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0}
+
+\item{Astartend}{a vector that selects the range of A,}
+
+\item{Bstartend}{a vector that selects the range of B,}
 }
 \description{
-Backsolve function on GPU
+solve A * C = B for C on a GPU, where A, B, C are batches of square matrices
+}
+\note{
+result matrices are stored in C respectively, no returned objects
 }

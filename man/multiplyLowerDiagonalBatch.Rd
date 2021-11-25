@@ -2,7 +2,7 @@
 % Please edit documentation in R/multiplyLowerDiagonalBatch.R
 \name{multiplyLowerDiagonalBatch}
 \alias{multiplyLowerDiagonalBatch}
-\title{multiplyLowerDiagonalBatch function on GPU}
+\title{multiplyLowerDiagonalBatch}
 \usage{
 multiplyLowerDiagonalBatch(
   output,
@@ -17,13 +17,13 @@ multiplyLowerDiagonalBatch(
 )
 }
 \arguments{
-\item{output}{the output = LDB}
+\item{output}{the output of LDB}
 
-\item{L}{lower triangular matrices in batce}
+\item{L}{lower triangular matrices in batches}
 
-\item{D}{diagonal matrices in batch}
+\item{D}{diagonal matrices in batches, each row contains diagonal elements of D'}
 
-\item{B}{matrices in batch}
+\item{B}{matrices in batches}
 
 \item{diagIsOne}{logical, whether the diagonal of L is one}
 
@@ -35,9 +35,9 @@ multiplyLowerDiagonalBatch(
 
 \item{NlocalCache}{a number}
 }
-\value{
-the result matrices of LDB in batch
-}
 \description{
-multiplyLowerDiagonalBatch function on GPU
+computes output = LD'B in batches on a GPU
+}
+\note{
+computed results are stored in output, no returned objects
 }

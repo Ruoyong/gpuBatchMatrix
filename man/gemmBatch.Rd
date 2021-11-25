@@ -2,34 +2,46 @@
 % Please edit documentation in R/gemmbatch.R
 \name{gemmBatch}
 \alias{gemmBatch}
-\title{Gemmbatch on GPU}
+\title{gemmBatch}
 \usage{
 gemmBatch(
   A,
   B,
-  Arowbatch,
-  Browbatch,
-  Acolbatch,
-  Bcolbatch,
-  need_transpose,
+  C,
+  transposeABC,
+  submatrixA,
+  submatrixB,
+  submatrixC,
+  batches,
   workgroupSize,
+  NlocalCache,
   verbose = FALSE
 )
 }
 \arguments{
-\item{A}{a vclMatrix consists of batches of submatrices}
+\item{A}{a "vclMatrix" consists of batches of matrices}
 
-\item{B}{a vclMatrix consists of batches of submatrices}
+\item{B}{a "vclMatrix" consists of batches of matrices}
 
-\item{Acolbatch}{number of batches in the column of A}
+\item{C}{a "vclMatrix" consists of batches of matrices}
 
-\item{Bcolbatch}{number of batches in the column of B}
+\item{transposeABC}{a vector of 1 or 0, 1 indicates transpose the matrices, e.g., c(0,0,0)}
 
-\item{rowbatch}{number of batches in row}
-}
-\value{
-a vclMatrix of submatrices multiplication results
+\item{submatrixA}{a vector that indicates the range of each submatrix of A, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)}
+
+\item{submatrixB}{a vector that indicates the range of each submatrix of B, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)}
+
+\item{submatrixC}{a vector that indicates the range of each submatrix of C, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)}
+
+\item{batches}{a vector that contains c(nRowBatch, nColBatch, recycleArow, recycleAcol, recycleBrow, recycleBcol), recycleArow=1 indicates there are no row batches for A, use the same A for all batches}
+
+\item{workgroupSize}{vector of six numbers, number of global work items and local work items,}
+
+\item{NlocalCache}{a vector, c(cacheSizeA, cacheSizeB)}
 }
 \description{
-Gemmbatch on GPU
+Multiplies a rectangular matrix by a rectangular matrix in row and column batches
+}
+\note{
+computed results are stored in C, no returned objects, if A and B have different row batches, then one of them must have only 1 row batch
 }
