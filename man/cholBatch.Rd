@@ -7,9 +7,10 @@
 cholBatch(
   A,
   D,
+  numbatchD,
   Nglobal,
   Nlocal,
-  NlocalCache = gpuR::gpuInfo()$localMem/16,
+  NlocalCache = gpuR::gpuInfo()$localMem/32,
   Astartend,
   Dstartend,
   verbose = FALSE
@@ -19,6 +20,8 @@ cholBatch(
 \item{A}{a vclMatrix on GPU, positive definite}
 
 \item{D}{a vclMatrix on GPU, each row contains diagonal elements of D'}
+
+\item{numbatchD}{number of batches}
 
 \item{Nglobal}{Size of the index space for use}
 
