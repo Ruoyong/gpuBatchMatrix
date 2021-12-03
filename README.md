@@ -19,7 +19,7 @@ devtools::install_github("")
 
 ## Documentation
 
-The Bambi documentation can be found in the [official docs](https://bambinos.github.io/bambi/index.html)
+The documentation can be found in the 
 
 ## Citation
 
