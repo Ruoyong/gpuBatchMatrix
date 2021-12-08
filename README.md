@@ -15,7 +15,7 @@ installation instructions relevant to your operating system.
 Install the development version with
 
 library("devtools")\
-devtools::install_github("Ruoyong/gpuBatchMatrix")
+devtools::install_github("ruoyongxu/gpuBatchMatrix")
 
 
 ## Documentation
