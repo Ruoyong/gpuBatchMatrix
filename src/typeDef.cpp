@@ -23,11 +23,6 @@ std::string openclTypeString<float>(){
   return(result);
 }
 
-template <>
-std::string openclTypeString<uint>(){
-  std::string result = "uint";
-  return(result);
-}
 
 template <>
 std::string openclTypeString<int>(){

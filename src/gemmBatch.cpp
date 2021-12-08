@@ -453,7 +453,7 @@ int gemmBatch2(
   
   viennacl::ocl::enqueue(gemmKernel(A, B, C, 0, batches[0]));
   
-  return 1;
+  return 0;
 }
 
 

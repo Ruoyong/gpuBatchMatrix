@@ -28,10 +28,6 @@ gemmBatch2backend <- function(A, B, C, transposeABC, submatrixA, submatrixB, sub
     .Call('_gpuBatchMatrix_gemmBatch2backend', PACKAGE = 'gpuBatchMatrix', A, B, C, transposeABC, submatrixA, submatrixB, submatrixC, batches, workgroupSize, NlocalCache, verbose)
 }
 
-likfitGpu_BackendP <- function(yx, coords, params, boxcox, betas, ssqY, aTDinvb_beta, XVYXVX, ssqBetahat, ssqBeta, detVar, detReml, jacobian, NparamPerIter, workgroupSize, localSize, NlocalCache, verbose, ssqYX, ssqYXcopy, LinvYX, QinvSsqYx, cholXVXdiag, varMat, cholDiagMat, b_beta) {
-    invisible(.Call('_gpuBatchMatrix_likfitGpu_BackendP', PACKAGE = 'gpuBatchMatrix', yx, coords, params, boxcox, betas, ssqY, aTDinvb_beta, XVYXVX, ssqBetahat, ssqBeta, detVar, detReml, jacobian, NparamPerIter, workgroupSize, localSize, NlocalCache, verbose, ssqYX, ssqYXcopy, LinvYX, QinvSsqYx, cholXVXdiag, varMat, cholDiagMat, b_beta))
-}
-
 mat_vec_eledivideBackend <- function(matrixR, rowvectorR, resultR, numWorkItems) {
     invisible(.Call('_gpuBatchMatrix_mat_vec_eledivideBackend', PACKAGE = 'gpuBatchMatrix', matrixR, rowvectorR, resultR, numWorkItems))
 }
