@@ -16,18 +16,9 @@ installation instructions relevant to your operating system.
 Install the development version with
 
 library("devtools")\
-devtools::install_github("")
+devtools::install_github("Ruoyong/gpuBatchMatrix")
 
 
-## Documentation
-
-The documentation can be found in the 
-
-## Citation
-
-                                     
-
-                                                                    
 
 ## Contributions
 
@@ -41,9 +32,6 @@ E-mail: ruoyong.xu@mail.utoronto.ca
 Affiliation: University of Toronto                                  
 Department of Statistical Sciences   
 
-## License
-
-[MIT License](https://github.com/LICENSE)
 
 
 
