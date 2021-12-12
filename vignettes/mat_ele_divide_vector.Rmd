@@ -27,6 +27,4 @@ xcpu/vrcpu
 gpuBatchMatrix:::mat_vec_eledivideBackend(x, vr, result,  c(4,4))
 as.matrix(result)
 
-
-
 ```

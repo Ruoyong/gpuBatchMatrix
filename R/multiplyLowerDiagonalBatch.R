@@ -27,7 +27,12 @@ multiplyLowerDiagonalBatch <- function(
                       Nlocal,
                       NlocalCache){
   
+  if(missing(Nglobal))
+    Nglobal = c(64, 16, 1)
   
+  if(missing(Nlocal)){
+    Nlocal = c(4, 2, 1)
+  }
   
   gpuBatchMatrix:::multiplyLowerDiagonalBatchBackend(
                output,

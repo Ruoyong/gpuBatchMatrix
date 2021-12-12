@@ -14,6 +14,7 @@ date()
 ```{r packages, results='hide', message='hide'}
    library(gpuR)
    library(gpuBatchMatrix)
+   library(clrng)
 ```
 
 
@@ -97,7 +98,7 @@ myParamsBatch = t(apply(myParamsBatch, 1, geostatsp::fillParam))
 myParamsBatch[,1:7]
 ```
 
-```{r outputBatchCreate, eval=T}
+```{r outputBatchCreate, eval=TRUE}
 library(gpuR)
 coordsGpu = vclMatrix(coordsSp@coords, nrow(coordsSp@coords), ncol(coordsSp@coords), type=theType)
 outputBatchF = vclMatrix(0, nrow(myParamsBatch)*nrow(coordsGpu), nrow(coordsGpu), type=gpuR::typeof(coordsGpu))
@@ -169,7 +170,7 @@ as.matrix(diagMat)[,1:4]
 
 
 
-```{r cholBatchCpu, eval=FALSE}
+```{r cholBatchCpu, eval=TRUE}
 D=2
 theMaternGpu = as.matrix(outputBatchF[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
 fromGpuOrig = chol4gpu = as.matrix(outputChol[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
@@ -210,14 +211,10 @@ plot(theDiag - diagGpu)
 
 
 # Multiplying lower triangle
-
-
 create a matrix of independent normals
-
-
 ```{r randomNormalsSim}
-streamsGpu <- gpuBatchMatrix::createStreamsGpu(128*64)
-zMatGpu = gpuBatchMatrix::rnorm(c(ncol(outputBatchF), Nsim), 
+streamsGpu <- clrng::createStreamsGpu(128*64)
+zMatGpu = clrng::rnorm(c(ncol(outputBatchF), Nsim), 
                            streams=streamsGpu, Nglobal=c(128,64),
                            type = theType)
 ```
@@ -227,7 +224,6 @@ zMatGpu = gpuBatchMatrix::rnorm(c(ncol(outputBatchF), Nsim),
 
 
 compute U = L D^(1/2) Z, where LDLt is the Cholesky of the variance matrix, Z is the independent normals
-
 ```{r multLowerGpu, eval = TRUE}
 simMat = vclMatrix(0, nrow(outputChol), ncol(zMatGpu), 
   type = gpuR::typeof(zMatGpu))
@@ -257,7 +253,7 @@ resCpu = chol4gpu %*% diag( sqrt(diagGpu)) %*% zCpu
 quantile(resGpu - resCpu)
 ```
 
-```{r checkMultiplyLower, eval=FALSE}
+```{r checkMultiplyLower, eval=TRUE}
 D=1
 resGpu = simMat[seq( (D-1) * ncol(outputBatchF)+1, len=ncol(outputBatchF)),]
 theMaternGpu = as.matrix(outputBatchF[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
@@ -275,7 +271,6 @@ range(resGpu - diag(sqrt(diagGpu)) %*% zCpu )
 
 
 # Plot simulated materns
-
 ```{r plotSimNames}
 theNames = apply(expand.grid('par',1:nrow(paramsGpu), 'sim', 1:Nsim), 1, paste, collapse='')
 ```
@@ -365,109 +360,5 @@ as.matrix(outputSwissRain)
 gpuR::gpuInfo()
 ```
 
-
-```{r oct26}
-library(gpuBatchMatrix)
-library(gpuR)
-library('geostatsp')
-data('swissRain')
-sr2 = swissRain[0:30,]
-
-# extract variables for modeling
-sr2$sqrtY = sqrt(sr2$rain)
-sr2$elev = raster::extract(swissAltitude, sr2)
-
-
-swissFitIso = geostatsp::likfitLgm(
-  data=sr2,
-  formula=sqrtY ~ elev,
-  param=c(range=50000,shape=1),
-  reml=FALSE,
-  verbose=FALSE
-)
-
-type="double"
-covariates = model.matrix(swissFitIso$model$formula, data=swissFitIso$data)
-temp = model.frame(swissFitIso$model$formula, data=swissFitIso$data)
-response=temp[,as.character(attributes(terms(temp))$variables)[2]]
-n = length(response)
-p = ncol(covariates)
-yXcpu=cbind(response,covariates)  
-
-
-boxcox = c(1, 0)
-colbatch<- as.integer(length(boxcox))
-# box cox transform
-transformed_y = matrix(0,n,length(boxcox))
-for (i in 1:length(boxcox)){
-  transformed_y[ ,i] <- ((yXcpu[ ,1]^boxcox[i]) - 1)/boxcox[i]
-}
-closetozeroindex <- which(abs(boxcox)<0.001)
-closetooneindex <- which(abs(boxcox - 1 ) < 0.001)
-transformed_y[ ,closetozeroindex] = log(yXcpu[,1])
-transformed_y[ ,closetooneindex] = yXcpu[,1]
-yX <- vclMatrix(cbind(transformed_y,yXcpu[,-1]),type=type)
-
-
-newParamList = list(
-  range=seq(30000, 80000 , len=10),
-  nugget = seq(0,0.25,len=5)
-) 
-
-newParam= do.call(expand.grid, newParamList)
-otherparams = c(shape=1, variance=1.840997, anisoRatio = 1, anisoAngleRadians = 0)
-otherparams = matrix(rep(otherparams,each=nrow(newParam)),nrow=nrow(newParam))
-colnames(otherparams) <- c("shape", "variance", "anisoRatio", "anisoAngleRadians")
-paramsBatch0 = cbind(newParam, otherparams)
-paramsBatch0 = t(apply(paramsBatch0, 1, geostatsp::fillParam))
-paramsBatch0 = cbind(paramsBatch0, matrix(0, nrow(paramsBatch0),22-ncol(paramsBatch0)))
-paramsBatch = gpuR::vclMatrix(paramsBatch0,type=type)
-
-groupsize=50
-
-
-Nglobal=c(64,64,2)
-localSize = c(4,4,1)
-NlocalCache=1000
-
-
-############################test matern matrix
-Vbatch <- vclMatrix(0, groupsize*n, n, type = type)
-coordsGpu = vclMatrix(sr2@coords, type =type)
-dim(Vbatch)
-
-
-gpuBatchMatrix:::maternBatchBackend(Vbatch, coordsGpu, paramsBatch,  c(1,1), c(1,1),#c(64,64), c(16,16), 
-                               0, nrow(paramsBatch), 10)
-
-gpuBatchMatrix::maternBatch(Vbatch, coordsGpu, paramsBatch,  c(64,64), c(16,16), 1, nrow(coordsGpu))
-
-
-any(is.na(as.matrix(Vbatch)))
-
-for(D in unique(round(seq(1L,nrow(paramsBatch), len=min(c(10, nrow(paramsBatch))))))) {
-  print(D)
-  fromCpu = geostatsp::matern(
-    x=sr2,
-    param=drop(paramsBatch0[D,1:7])
-  )
-  fromGpu = as.matrix(Vbatch)[
-    seq(from=1+ncol(Vbatch) * (D-1), len=ncol(Vbatch)),]
-  print(quantile(as.vector(fromCpu - fromGpu), na.rm=TRUE))
-}
-
-
-set=48
-var4cpu = geostatsp::matern(
-  x=sr2,
-  param=drop(paramsBatch0[set,1:7])
-)
-dim(var4cpu)
-start<-n*(set-1)+1;    end<-n*set
-
-var4gpu = Vbatch[c(start:end), ]
-range(var4gpu-var4cpu)
-
-```
 
 
