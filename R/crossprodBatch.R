@@ -7,6 +7,9 @@
 #' @param Nglobal vector of number of global work items
 #' @param Nlocal vector of number of local work items
 #' @param NlocalCache elements in local cache
+#' @param Cstartend a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in C
+#' @param Astartend a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in A
+#' @param Dstartend a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in D
 #' @note computed results are stored in C, no returned objects
 #' @useDynLib gpuBatchMatrix
 #' @export

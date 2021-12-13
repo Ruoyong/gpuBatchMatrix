@@ -8,6 +8,8 @@ maternGpuParam(x, type = "double")
 }
 \arguments{
 \item{x}{R matrix of covariance parameters}
+
+\item{type}{precision type of paramters, 'double' or 'float'}
 }
 \description{
 Create parameters be used by maternBatch on GPU

@@ -878,17 +878,7 @@ SEXP multiplyLowerBatchTyped(
 
 
 
-//' Multiply lower triangular matrices
-//' 
-//' Multiplies a lower triangular matrix by a rectangular matrix
-//'
-//' @param C output matrices, stacked row-wise
-//' @param A lower triangular matrices
-//' @param B rectangular matrix or matrices
-//' @param Nglobal vector of number of global work items: Drow, Dcol, Dmatrix
-//' @param Nlocal vector of number of local work items anything, anything, 1
-//' @param NlocalCache elements in local cache
-//' @export
+
 // [[Rcpp::export]]
 SEXP multiplyLowerBatchBackend(
 	Rcpp::S4 C,

@@ -38,9 +38,11 @@ backsolveBatch(
 
 \item{Cstartend}{a vector that selects the range of C, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0}
 
-\item{Astartend}{a vector that selects the range of A,}
+\item{Astartend}{a vector that selects the range of A}
 
-\item{Bstartend}{a vector that selects the range of B,}
+\item{Bstartend}{a vector that selects the range of B}
+
+\item{verbose}{if TRUE, print out more information}
 }
 \description{
 solve A * C = B for C on a GPU, where A, B, C are batches of square matrices

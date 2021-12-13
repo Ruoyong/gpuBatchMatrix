@@ -7,7 +7,8 @@
 #' @param Nlocal Work group size of the index space
 #' @param NlocalCache local memory cached
 #' @param Astartend a vector that selects the range of A, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0
-#' @param Dstartend a vector that selects the range of D,
+#' @param Dstartend a vector that selects the range of D
+#' @param verbose if TRUE, print out more information
 #' @note computed L and D' are stored in A and D respectively, no returned objects
 #' @useDynLib gpuBatchMatrix
 #' @export

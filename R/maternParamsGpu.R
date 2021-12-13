@@ -1,6 +1,7 @@
 #' @title maternGpuParam
 #' @description Create parameters be used by maternBatch on GPU
 #' @param x R matrix of covariance parameters 
+#' @param type precision type of paramters, 'double' or 'float'
 #' @useDynLib gpuBatchMatrix
 #' @export
 

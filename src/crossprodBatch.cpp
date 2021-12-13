@@ -459,7 +459,7 @@ int crossprodBatch(
   
   const int NlocalCacheD = std::max( 0, (NlocalCache - Nlocal[0]*Nlocal[1])/2 );
   
-  std::cout << "NlocalCacheD " << NlocalCacheD << "\n";
+  Rcpp::Rcout << "NlocalCacheD " << NlocalCacheD << "\n";
   
   // the context
   viennacl::ocl::context ctx(viennacl::ocl::get_context(ctx_id));
@@ -555,9 +555,8 @@ SEXP crossprodBatchTyped(
 }
 
 
-//' Multiply crossproduct matrices
-//' 
-//' Computes C = t(A) D A
+// Multiply crossproduct matrices
+// Computes C = t(A) D A
 // [[Rcpp::export]]
 SEXP crossprodBatchBackend(
     Rcpp::S4 C,

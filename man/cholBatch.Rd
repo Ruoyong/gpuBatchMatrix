@@ -31,7 +31,9 @@ cholBatch(
 
 \item{Astartend}{a vector that selects the range of A, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0}
 
-\item{Dstartend}{a vector that selects the range of D,}
+\item{Dstartend}{a vector that selects the range of D}
+
+\item{verbose}{if TRUE, print out more information}
 }
 \description{
 performs Cholesky decomposition in batches on A = L D' L^t on a GPU

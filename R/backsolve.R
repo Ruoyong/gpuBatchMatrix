@@ -9,8 +9,9 @@
 #' @param Nlocal Work group size of the index space
 #' @param NlocalCache local memory cached
 #' @param Cstartend a vector that selects the range of C, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0
-#' @param Astartend a vector that selects the range of A, 
-#' @param Bstartend a vector that selects the range of B, 
+#' @param Astartend a vector that selects the range of A 
+#' @param Bstartend a vector that selects the range of B
+#' @param verbose if TRUE, print out more information
 #' @note result matrices are stored in C respectively, no returned objects
 #' @useDynLib gpuBatchMatrix
 #' @export

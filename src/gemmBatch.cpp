@@ -489,14 +489,7 @@ SEXP gemmBatch2Typed(Rcpp::S4 AR,
 
 
 
-//' 
-//' Multiplies a rectangular matrix by a rectangular matrix in batches
-//'
-//' @param C output matrices, stacked row-wise
-//' @param A rectangular matrices
-//' @param B rectangular matrices 
-//' @param Nglobal vector of number of global work items//' @param Nlocal vector of number of local work items//' @param NlocalCache elements in local cache
-//' @export
+
 // [[Rcpp::export]]
 SEXP gemmBatch2backend(
     Rcpp::S4 A,

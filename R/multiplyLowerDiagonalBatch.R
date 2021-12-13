@@ -1,11 +1,11 @@
 #' @title multiplyLowerDiagonalBatch
-#' @description computes output = LD'B in batches on a GPU
+#' @description computes output = LDB in batches on a GPU
 #' @param output the output of LDB
 #' @param L  lower triangular matrices in batches
 #' @param D  diagonal matrices in batches, each row contains diagonal elements of D' 
 #' @param B  matrices in batches
 #' @param diagIsOne logical, whether the diagonal of L is one 
-#' @param transformD how to transform D
+#' @param transformD how to transform D, can be any OpenCL C built-in math function
 #' @param Nglobal the size of the index space for use
 #' @param Nlocal the work group size of the index space 
 #' @param NlocalCache a number
@@ -17,29 +17,24 @@
 
 
 
-# output = L  D B, L lower triangular, D diagonal
+
 
 multiplyLowerDiagonalBatch <- function(
-                      output, L, D, B,
+                      output, L, D, B, # output = L  D B, L lower triangular, D diagonal
                       diagIsOne, # diagonal of L is one
                       transformD, 
                       Nglobal,
                       Nlocal,
                       NlocalCache){
   
-  if(missing(Nglobal))
-    Nglobal = c(64, 16, 1)
+
   
-  if(missing(Nlocal)){
-    Nlocal = c(4, 2, 1)
-  }
-  
-  gpuBatchMatrix:::multiplyLowerDiagonalBatchBackend(
+  multiplyLowerDiagonalBatchBackend(
                output,
                L,
                D,
                B,
-               diagIsOne,    
+               diagIsOne,
                transformD,
                Nglobal,
                Nlocal,

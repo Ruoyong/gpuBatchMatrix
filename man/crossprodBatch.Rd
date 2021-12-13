@@ -31,6 +31,12 @@ crossprodBatch(
 \item{Nlocal}{vector of number of local work items}
 
 \item{NlocalCache}{elements in local cache}
+
+\item{Cstartend}{a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in C}
+
+\item{Astartend}{a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in A}
+
+\item{Dstartend}{a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in D}
 }
 \description{
 computes C = t(A) A or t(A) D' A or t(A) D'^(-1) A in batches on a GPU

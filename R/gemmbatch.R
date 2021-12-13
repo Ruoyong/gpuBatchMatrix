@@ -10,6 +10,7 @@
 #' @param batches a vector that contains c(nRowBatch, nColBatch, recycleArow, recycleAcol, recycleBrow, recycleBcol), recycleArow=1 indicates there are no row batches for A, use the same A for all batches
 #' @param workgroupSize vector of six numbers, number of global work items and local work items,
 #' @param NlocalCache a vector, c(cacheSizeA, cacheSizeB)
+#' @param verbose if TRUE, print out more information
 #' @note computed results are stored in C, no returned objects, if A and B have different row batches, then one of them must have only 1 row batch 
 #' @useDynLib gpuBatchMatrix
 #' @export

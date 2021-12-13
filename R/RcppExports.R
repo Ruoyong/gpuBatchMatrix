@@ -9,21 +9,10 @@ cholBatchBackend <- function(A, D, Astartend, Dstartend, numbatchD, Nglobal, Nlo
     invisible(.Call('_gpuBatchMatrix_cholBatchBackend', PACKAGE = 'gpuBatchMatrix', A, D, Astartend, Dstartend, numbatchD, Nglobal, Nlocal, NlocalCache))
 }
 
-#' Multiply crossproduct matrices
-#' 
-#' Computes C = t(A) D A
 crossprodBatchBackend <- function(C, A, D, invertD, Cstartend, Astartend, Dstartend, Nglobal, Nlocal, NlocalCache) {
     .Call('_gpuBatchMatrix_crossprodBatchBackend', PACKAGE = 'gpuBatchMatrix', C, A, D, invertD, Cstartend, Astartend, Dstartend, Nglobal, Nlocal, NlocalCache)
 }
 
-#' 
-#' Multiplies a rectangular matrix by a rectangular matrix in batches
-#'
-#' @param C output matrices, stacked row-wise
-#' @param A rectangular matrices
-#' @param B rectangular matrices 
-#' @param Nglobal vector of number of global work items//' @param Nlocal vector of number of local work items//' @param NlocalCache elements in local cache
-#' @export
 gemmBatch2backend <- function(A, B, C, transposeABC, submatrixA, submatrixB, submatrixC, batches, workgroupSize, NlocalCache, verbose) {
     .Call('_gpuBatchMatrix_gemmBatch2backend', PACKAGE = 'gpuBatchMatrix', A, B, C, transposeABC, submatrixA, submatrixB, submatrixC, batches, workgroupSize, NlocalCache, verbose)
 }
@@ -52,17 +41,6 @@ multiplyDiagonalBatchBackend <- function(C, A, B, inverse, Nglobal, Nlocal) {
     .Call('_gpuBatchMatrix_multiplyDiagonalBatchBackend', PACKAGE = 'gpuBatchMatrix', C, A, B, inverse, Nglobal, Nlocal)
 }
 
-#' Multiply lower triangular matrices
-#' 
-#' Multiplies a lower triangular matrix by a rectangular matrix
-#'
-#' @param C output matrices, stacked row-wise
-#' @param A lower triangular matrices
-#' @param B rectangular matrix or matrices
-#' @param Nglobal vector of number of global work items: Drow, Dcol, Dmatrix
-#' @param Nlocal vector of number of local work items anything, anything, 1
-#' @param NlocalCache elements in local cache
-#' @export
 multiplyLowerBatchBackend <- function(C, A, B, diagIsOne, Nglobal, Nlocal, NlocalCache) {
     .Call('_gpuBatchMatrix_multiplyLowerBatchBackend', PACKAGE = 'gpuBatchMatrix', C, A, B, diagIsOne, Nglobal, Nlocal, NlocalCache)
 }

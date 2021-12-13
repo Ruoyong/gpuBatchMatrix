@@ -38,6 +38,8 @@ gemmBatch(
 \item{workgroupSize}{vector of six numbers, number of global work items and local work items,}
 
 \item{NlocalCache}{a vector, c(cacheSizeA, cacheSizeB)}
+
+\item{verbose}{if TRUE, print out more information}
 }
 \description{
 Multiplies a rectangular matrix by a rectangular matrix in row and column batches
