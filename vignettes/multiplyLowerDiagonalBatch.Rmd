@@ -23,7 +23,7 @@ diagmat <- matrix(0, 5, 5)
 diag(diagmat) <- c(2,1,2,3,5)
 
 
-zmat = matrix(rnorm(5*2), ncol=2)
+zmat = matrix(stats::rnorm(5*2), ncol=2)
 
 outputcpu <- L %*% sqrt(diagmat) %*% zmat
 outputcpu
@@ -33,7 +33,7 @@ Lg <- vclMatrix(L, type=type)
 diagg <- vclMatrix(diag(diagmat), nrow=1, ncol=5, type=type)
 zmatg <- vclMatrix(zmat, type = type)
 
-gpuBatchMatrix::multiplyLowerDiagonalBatch(output=output, 
+gpuBatchMatrix:::multiplyLowerDiagonalBatchBackend(output=output, 
                                            L=Lg,
                                            D=diagg,
                                            B=zmatg,
@@ -51,7 +51,7 @@ as.matrix(output)
 
 
 
-```{r testtwobatch, eval=FALSE}
+```{r testtwobatch, eval=TRUE}
 set.seed(88)
 type = "double"
 L <- matrix(floor(stats::runif(25, min=1, max=15)), 5, 5)
@@ -62,7 +62,7 @@ L  # 5 x 5
 diagmat <- matrix(0, 5,5)
 diag(diagmat) <- c(2,1,2,3,5)
 
-zmat = matrix(rnorm(5*2), ncol=2)
+zmat = matrix(stats::rnorm(5*2), ncol=2)
 
 outputcpu <- L %*% sqrt(diagmat) %*% zmat
 outputcpu
@@ -72,10 +72,8 @@ Lg <- vclMatrix(rbind(L,L), type=type)
 diagg <- vclMatrix(rbind(diag(diagmat),diag(diagmat)), nrow=2, ncol=5, type=type)
 zmatg <- vclMatrix(rbind(zmat,zmat), type = type)
 
-gpuBatchMatrix::multiplyLowerDiagonalBatch(output, Lg, diagg, zmatg, diagIsOne = 1, 
-                                           transformD = "sqrt", Nglobal = c(4,4,1),
-                      Nlocal = c(2,2,1),
-                      NlocalCache = 50)
+gpuBatchMatrix:::multiplyLowerDiagonalBatchBackend(output, Lg, diagg, zmatg, diagIsOne = 1, 
+                                           transformD = "sqrt", Nglobal = c(4,4,1),Nlocal = c(2,2,1),NlocalCache = 50)
 
 
 as.matrix(output)

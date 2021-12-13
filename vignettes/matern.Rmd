@@ -229,7 +229,7 @@ simMat = vclMatrix(0, nrow(outputChol), ncol(zMatGpu),
   type = gpuR::typeof(zMatGpu))
 
 
-gpuBatchMatrix:::multiplyLowerDiagonalBatchBackend(
+gpuBatchMatrix::multiplyLowerDiagonalBatch(
   simMat, outputChol, diagMat, zMatGpu,
   diagIsOne = TRUE, # diagonal of L is one
   transformD = "sqrt", # take the square root of each element of D
