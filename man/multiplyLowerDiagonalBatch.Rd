@@ -5,10 +5,10 @@
 \title{multiplyLowerDiagonalBatch}
 \usage{
 multiplyLowerDiagonalBatch(
-  output,
   L,
   D,
   B,
+  output,
   diagIsOne,
   transformD,
   Nglobal,
@@ -17,13 +17,13 @@ multiplyLowerDiagonalBatch(
 )
 }
 \arguments{
-\item{output}{the output of LDB}
-
 \item{L}{lower triangular matrices in batches}
 
 \item{D}{diagonal matrices in batches, each row contains diagonal elements of D'}
 
 \item{B}{matrices in batches}
+
+\item{output}{the result of LD'B}
 
 \item{diagIsOne}{logical, whether the diagonal of L is one}
 
@@ -36,8 +36,5 @@ multiplyLowerDiagonalBatch(
 \item{NlocalCache}{a number}
 }
 \description{
-computes output = LDB in batches on a GPU
-}
-\note{
-computed results are stored in output, no returned objects
+computes output = LD'B in batches on a GPU
 }

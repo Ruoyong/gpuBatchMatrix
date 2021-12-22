@@ -25,5 +25,5 @@ maternBatch(param, coords, var, Nglobal, Nlocal, startrow, numberofrows)
 computes matern covariance matrices in batches on a GPU
 }
 \note{
-computed results are stored in var, no returned objects
+computed results are stored in var
 }

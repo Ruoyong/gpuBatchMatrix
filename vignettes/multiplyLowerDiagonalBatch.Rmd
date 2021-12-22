@@ -33,10 +33,11 @@ Lg <- vclMatrix(L, type=type)
 diagg <- vclMatrix(diag(diagmat), nrow=1, ncol=5, type=type)
 zmatg <- vclMatrix(zmat, type = type)
 
-gpuBatchMatrix:::multiplyLowerDiagonalBatchBackend(output=output, 
+gpuBatchMatrix:::multiplyLowerDiagonalBatchBackend(
                                            L=Lg,
                                            D=diagg,
                                            B=zmatg,
+                                           output=output, 
                                            diagIsOne = TRUE,
                                            transformD = "sqrt",
                                            Nglobal = c(4,4,1),
@@ -72,7 +73,7 @@ Lg <- vclMatrix(rbind(L,L), type=type)
 diagg <- vclMatrix(rbind(diag(diagmat),diag(diagmat)), nrow=2, ncol=5, type=type)
 zmatg <- vclMatrix(rbind(zmat,zmat), type = type)
 
-gpuBatchMatrix:::multiplyLowerDiagonalBatchBackend(output, Lg, diagg, zmatg, diagIsOne = 1, 
+gpuBatchMatrix:::multiplyLowerDiagonalBatchBackend(Lg, diagg, zmatg, output, diagIsOne = 1, 
                                            transformD = "sqrt", Nglobal = c(4,4,1),Nlocal = c(2,2,1),NlocalCache = 50)
 
 

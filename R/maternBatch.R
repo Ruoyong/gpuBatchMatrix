@@ -7,7 +7,7 @@
 #' @param Nlocal vector of number of local work items
 #' @param startrow starting row of parameter matrix
 #' @param numberofrows number of rows for computation
-#' @note computed results are stored in var, no returned objects
+#' @note computed results are stored in var
 #' @useDynLib gpuBatchMatrix
 #' @export
 
