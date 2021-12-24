@@ -22,7 +22,7 @@ devtools::install_github("ruoyongxu/gpuBatchMatrix")
 More things coming.
 
 
-## Contributions
+## Contributors
 Author: Patrick Brown                                                
 E-mail: patrick.brown@utoronto.ca                                      
 Affiliation: University of Toronto                                      
