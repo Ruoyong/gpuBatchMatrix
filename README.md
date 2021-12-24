@@ -12,7 +12,7 @@ row sum and column sum, for multiple batches of matrices on GPU in R.
 See [github wiki](https://github.com/cdeterman/gpuR/wiki) for gpuR
 installation instructions relevant to your operating system.
 
-Install the development version via the command below.
+Install the development version via the commands below.
 
 library("devtools")\
 devtools::install_github("ruoyongxu/gpuBatchMatrix")
