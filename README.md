@@ -4,7 +4,7 @@ Matrix operation in batches on GPU in R
 
 ## Overview
 gpuBatchMatrix is an R package that computes matern covariance matrix, matrix-matrix multiplication, cholesky decomposition, and other operations such as matrix 
-row sum and column sum, for multiple batches of matrices on GPU in R.
+row sum and column sum, for multiple batches of matrices in parallel on GPUs in R.
 
 
 
