@@ -19,11 +19,8 @@ date()
 
 
 ```{r memoryAvailable, echo=TRUE}
+setContext(grep("gpu", listContexts()$device_type))
 gpuR::listContexts()[,'platform']
-which2.1 = grep('OpenCL 2.[[:digit:]]',gpuR::listContexts()[,'platform'])
-if(length(which2.1)) {
-  gpuR::setContext(which2.1[1])
-}
 gpuR::gpuInfo()$deviceName
 gpuR::gpuInfo()$maxAllocatableMem/(1024^3)
 ```
