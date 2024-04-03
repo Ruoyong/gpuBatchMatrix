@@ -11,6 +11,7 @@
 #' @param verbose if TRUE, print out more information
 #' @note computed L and D' are stored in A and D respectively, no returned objects
 #' @useDynLib gpuBatchMatrix
+#' @import gpuR
 #' @export
 
 
