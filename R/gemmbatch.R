@@ -36,8 +36,7 @@ gemmBatch <- function(
   
   workgroupSize[4]=1
   
-  if(verbose){ message(paste('global work items', workgroupSize, 
-                             'local work items', localSize))}
+  if(verbose){ message(paste('global work items', workgroupSize))}
 
   
   gemmBatch2backend(A,B,C,transposeABC,  

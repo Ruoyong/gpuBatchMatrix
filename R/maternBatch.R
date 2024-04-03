@@ -21,9 +21,9 @@ maternBatch <- function(param, #22 columns
                         startrow,   # new added
                         numberofrows){
   
-  if("SpatRaster" %in% class(myRaster)   ) {
+  if("SpatRaster" %in% class(coords)   ) {
     if(requireNamespace("terra")) {
-      coords = terra::xyFromCell(coords, 1:ncell(coords))
+      coords = terra::xyFromCell(coords, 1:terra::ncell(coords))
     } else {
       stop("install the raster package to use these coordinates")
     }
