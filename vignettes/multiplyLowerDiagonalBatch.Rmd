@@ -4,7 +4,7 @@
 -->
 
 
-```{r packages, results='hide', message='hide'}
+```{r packages}
    library(gpuR)
    library(gpuBatchMatrix)
 ```

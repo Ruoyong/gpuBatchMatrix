@@ -11,7 +11,7 @@ date()
 
 
 
-```{r packages, results='hide', message='hide'}
+```{r packages}
    library(gpuR)
    library(gpuBatchMatrix)
    library(clrng)
@@ -176,6 +176,7 @@ diagGpu = as.vector(pmax(0,diagMat[D,]))
 
 maternReconstruct = chol4gpu %*% diag(diagGpu) %*% t(chol4gpu)
 
+if(requireNamespace("geostatsp", quietly=TRUE)) {
 maternCpu = geostatsp::matern(
     x=coordsSp,
     param=drop(myParamsBatch[D,1:7]))
@@ -195,12 +196,9 @@ cholCpu = cholCpu %*% diag(1/theDiag)
 theDiag = theDiag^2
 
 
-
-#quantile(cholCpu - chol4gpu, prob = Sprob)
-#quantile(theDiag - as.matrix(diagMat)[D,], prob=Sprob)
 plot(theDiag - diagGpu)
-#plot(cholCpu[600,] - chol4gpu[600,])
-#cbind(theDiag, diagGpu, theDiag - diagGpu)[seq(178,len=20),]
+
+}
 ```
 
 
@@ -272,19 +270,22 @@ theNames = apply(expand.grid('par',1:nrow(paramsGpu), 'sim', 1:Nsim), 1, paste, 
 ```
 
 ```{r plotSimSetup, eval = F}
+if(requireNamespace("terra", quietly=TRUE)) {
 simRaster = terra::rast(myRaster, 
   nlyrs = ncol(simMat)*nrow(paramsGpu))
 system.time(values(simRaster) <- as.vector(as.matrix(simMat)))
 names(simRaster) = theNames
+}
 ```
 
 ```{r plotSim, fig.height=5, fig.width=4, out.width="paste0(98/nrow(paramsGpu), '%')", fig.cap='simulations', fig.subcap = 'theNames', eval = F}
 par(mar=rep(0.1, 4))
+if(requireNamespace("terra", quietly=TRUE)) {
 for(D in names(simRaster)) {
   plot(terra::ext(simRaster))
   plot(simRaster[[D]], legend=FALSE, add=TRUE)
 }
-  
+}
 ```
 
 
@@ -327,6 +328,7 @@ solve(L, as.matrix(simMat[1:ncol(outputChol),]))[1:12, ]
 
 
 ```{r batchMaternSwussRaub, eval=FALSE}
+if(requireNamespace("geostatsp", quietly=TRUE)) {
 data('swissRain', package='geostatsp')
 swissRain = terra::unwrap(swissRain)
 sr2 = swissRain[1:4,]
@@ -349,6 +351,7 @@ gpuBatchMatrix::maternBatch(
     Nlocal = c(1,1,1))
 geostatsp::matern(sr2, myParamsSR)
 as.matrix(outputSwissRain)
+}
 ```
 # extra info
 

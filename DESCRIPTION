@@ -9,10 +9,10 @@ License: GPL (>= 3)
 Encoding: UTF-8
 NeedsCompilation: yes
 Depends: R (>= 3.5.0), gpuR
-Suggests: clrng, sp, knitr, mapmisc, Matrix, raster, geostatsp
+Suggests: clrng, sp, knitr, Matrix, geostatsp, terra
 LinkingTo:
 	RViennaCL (>= 1.7.1.4),
 	gpuR,
 	Rcpp
 VignetteBuilder: knitr
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3

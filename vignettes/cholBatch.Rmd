@@ -85,7 +85,6 @@ as.matrix(diagMat)
 # this file used for the example on paper
 library("gpuR")
 library("gpuBatchMatrix")
-library('geostatsp')
 Ngrid = c(40, 40)
 NlocalCache = 1000
 Nglobal = c(64L, 64L, 16L)
@@ -93,17 +92,19 @@ Nlocal = c(4L, 2L, 2L)
 theType = "double"
 
 
-
-myRaster = raster(
-  extent(0,Ngrid[1]/Ngrid[2],5,6),
+if(requireNamespace('terra', quietly=TRUE) & 
+   requireNamespace('geostatsp', quietly=TRUE) ) {
+myRaster = terra::rast(
+  terra::ext(0,Ngrid[1]/Ngrid[2],5,6),
   Ngrid[2], Ngrid[1]
 )
 
+coordsSp = as.points(myRaster)
+coordsGpu = vclMatrix(crds(coordsSp), 
+                      nrow(coordsSp), 
+                      2, type=theType)
 
-coordsSp = sp::SpatialPoints(xyFromCell(myRaster, 1:ncell(myRaster)))
-coordsGpu = vclMatrix(coordsSp@coords, 
-                      nrow(coordsSp@coords), 
-                      ncol(coordsSp@coords), type=theType)
+}
 #dist(coordsSp@coords)
 myParamsBatch = 
   rbind(c(shape=1.25, range=0.5, variance = 1.5, nugget = 0,anisoRatio = 1, anisoAngleRadians = 0),
@@ -154,9 +155,7 @@ diag(chol4gpu) = 1
 range(cholCpu - chol4gpu)
 range(theDiag - as.matrix(diagMat)[set,])
 
-
-
-
+}
 ```
 
 
