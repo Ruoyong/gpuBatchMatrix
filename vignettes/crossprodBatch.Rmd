@@ -10,7 +10,6 @@ library('gpuR')
 
 
 ```{r crossprod_test10.10}
-library("gpuR")
 library("gpuBatchMatrix")
 nrow = 20
 ncol=5
@@ -89,9 +88,6 @@ as.matrix(gpuC)
 
 
 ```{r checkAug26, eval=FALSE}
-library("gpuR")
-library("gpuBatchMatrix")
-
 
 D1 <- matrix(0,nrow=5, ncol=5)
 diag(D1)<-c(1,2,3,1,3)

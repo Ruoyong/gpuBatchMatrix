@@ -9,7 +9,8 @@ License: GPL (>= 3)
 Encoding: UTF-8
 NeedsCompilation: yes
 Depends: R (>= 3.5.0), gpuR
-Suggests: clrng, knitr, Matrix, geostatsp, terra
+Suggests: knitr, terra
+Enhances: geostatsp
 LinkingTo:
 	RViennaCL (>= 1.7.1.4),
 	gpuR,

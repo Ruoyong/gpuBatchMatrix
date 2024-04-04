@@ -5,10 +5,6 @@
 
 
 ## Chol
-```{r package}
-#library(Matrix)
-
-```
 
 
 ```{r cpu_function}
@@ -48,9 +44,6 @@ as.matrix(gpuA)
 as.matrix(diagMat)
 
 
-
-library(gpuBatchMatrix)
-library(gpuR)
 gpuA<-vclMatrix(rbind(A1,A2),type="double")
 diagMat = vclMatrix(0, 3, ncol(A1), type = "double")
 NglobalChol =  c(4,4,1)
@@ -83,8 +76,6 @@ as.matrix(diagMat)
 
 ```{r problemexampleSep14, eval=F}
 # this file used for the example on paper
-library("gpuR")
-library("gpuBatchMatrix")
 Ngrid = c(40, 40)
 NlocalCache = 1000
 Nglobal = c(64L, 64L, 16L)
@@ -105,7 +96,7 @@ coordsGpu = vclMatrix(crds(coordsSp),
                       2, type=theType)
 
 }
-#dist(coordsSp@coords)
+
 myParamsBatch = 
   rbind(c(shape=1.25, range=0.5, variance = 1.5, nugget = 0,anisoRatio = 1, anisoAngleRadians = 0),
         c(shape=2.15, range=0.25, variance = 2, nugget = 0, anisoRatio = 4, anisoAngleRadians = pi/7),
