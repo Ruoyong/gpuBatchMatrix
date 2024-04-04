@@ -210,7 +210,7 @@ plot(theDiag - diagGpu)
 
 # Multiplying lower triangle
 create a matrix of independent normals
-```{r randomNormalsSim}
+```{r randomNormalsSim, eval = TRUE}
 streamsGpu <- clrng::createStreamsGpu(128*128)
 zMatGpu = clrng::rnormGpu(c(ncol(outputBatchF), Nsim), 
                            streams=streamsGpu, Nglobal=c(128,128),
