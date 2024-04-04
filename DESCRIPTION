@@ -1,5 +1,5 @@
 Package: gpuBatchMatrix
-Version: 0.1
+Version: 0.2
 Date: 2019-09-14
 Title: matrices operations in batches with GPU
 Author: Patrick Brown, Ruoyong Xu
@@ -16,4 +16,4 @@ LinkingTo:
 	gpuR,
 	Rcpp
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1

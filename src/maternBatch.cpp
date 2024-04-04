@@ -538,11 +538,12 @@ void maternBatchVcl(
   maternKernel.local_work_size(1, (cl_uint) (numLocalItems[1]));
   
   if(verbose) {
-    Rcpp::Rcout << "\n" << NlocalParams << " "<< Nmatrix << " " <<
-      localParameters.size() << " " 
-                             << ceil(Nmatrix * numLocalItems[1] / numWorkItems[1]) << " " <<
-      NlocalParams * ceil(Nmatrix * numLocalItems[1] / numWorkItems[1])  << 
-        "\n";
+    Rcpp::Rcout << "\nNlocalParams is " << NlocalParams 
+    << "\nNmatrix is " << Nmatrix << " " 
+    << "\nlocalParameters.size() is " << localParameters.size() 
+    << "\nceil(Nmatrix * numLocalItems[1] / numWorkItems[1]) is " << ceil(Nmatrix * numLocalItems[1] / numWorkItems[1]) 
+    << "\nNlocalParams * ceil(Nmatrix * numLocalItems[1] / numWorkItems[1]) is " << NlocalParams * ceil(Nmatrix * numLocalItems[1] / numWorkItems[1])  
+    << std::endl;;
   }
   
   if(verbose > 1) {
@@ -554,9 +555,12 @@ void maternBatchVcl(
   }
   
   if(verbose) {
-    Rcpp::Rcout << startrow << " " << Nmatrix << " " << param.size1() << " " <<
-      NgroupsOfParameters << " " << NparametersPerGroup << " " <<
-        localParameters.size() / sizeof(param(0,0)) << " " << sizeof(param(0,0)) <<  "\n";
+    Rcpp::Rcout << "\nstartrow is " << startrow 
+    << "\nparam.size1() is " << param.size1() 
+    << "\nNgroupsOfParameters is " << NgroupsOfParameters 
+    << "\nNparametersPerGroup is " << NparametersPerGroup 
+    << "\nlocalParameters.size() / sizeof(param(0,0)) is " << localParameters.size() / sizeof(param(0,0)) 
+    << "\nsizeof(param(0,0)) is " << sizeof(param(0,0)) <<  "\n";
   }
   
   
