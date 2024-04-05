@@ -132,7 +132,8 @@ as.matrix(
 myParamsBatch[(1+startrow):nrow(paramsGpu),c('variance','nugget')]))
 ```
 
-```{r showfromcpu, eval=FALSE}
+```{r showfromcpu, eval=TRUE}
+#### compare matern gpu results with geostatsp matern results
 for(D in unique(round(seq(1L,nrow(myParamsBatch), len=min(c(3, nrow(myParamsBatch))))))) {
 print(D)
 fromCpu = geostatsp::matern(
@@ -168,25 +169,34 @@ as.matrix(diagMat)[,1:4]
 
 
 ```{r cholBatchCpu, eval=TRUE}
+#### check chol gpu results 
 D=2
+Sprob = c(0,0.01, 0.1, 0.5)
+Sprob = sort(unique(c(Sprob, 1-Sprob)))
+
+
 theMaternGpu = as.matrix(outputBatchF[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
 dim(theMaternGpu)
-fromGpuOrig = chol4gpu = as.matrix(outputChol[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
+chol4gpu = as.matrix(outputChol[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
 chol4gpu[upper.tri(chol4gpu)] = 0
 diag(chol4gpu) = 1
 #diagGpu = as.vector(pmax(0,diagMat[D,]))
 diagGpu = as.vector(diagMat[D,])
 length(diagGpu)
-maternReconstruct = chol4gpu %*% diag(diagGpu) %*% t(chol4gpu)
 
+
+## first check
+maternReconstruct = chol4gpu %*% diag(diagGpu) %*% t(chol4gpu)
+quantile(maternReconstruct - theMaternGpu, prob=Sprob)
+
+
+## second check
 maternCpu = geostatsp::matern(
     x=coordsSp,
     param=drop(myParamsBatch[D,1:7]))
-Sprob = c(0,0.01, 0.1, 0.5)
-Sprob = sort(unique(c(Sprob, 1-Sprob)))
-
 quantile(maternReconstruct - maternCpu, prob=Sprob)
 
+## third check
 cholCpu = geostatsp::matern(
     x=coordsSp,
     param=drop(myParamsBatch[D,1:7]),
@@ -196,10 +206,8 @@ theDiag = diag(cholCpu)
 cholCpu = cholCpu %*% diag(1/theDiag)
 theDiag = theDiag^2
 
-
-
-#quantile(cholCpu - chol4gpu, prob = Sprob)
-#quantile(theDiag - as.matrix(diagMat)[D,], prob=Sprob)
+quantile(cholCpu - chol4gpu, prob = Sprob)
+quantile(theDiag - as.matrix(diagMat)[D,], prob=Sprob)
 plot(theDiag - diagGpu)
 #plot(cholCpu[600,] - chol4gpu[600,])
 #cbind(theDiag, diagGpu, theDiag - diagGpu)[seq(178,len=20),]
@@ -211,9 +219,9 @@ plot(theDiag - diagGpu)
 # Multiplying lower triangle
 create a matrix of independent normals
 ```{r randomNormalsSim, eval = TRUE}
-streamsGpu <- clrng::createStreamsGpu(128*128)
+streamsGpu <- clrng::createStreamsGpu(64*128)
 zMatGpu = clrng::rnormGpu(c(ncol(outputBatchF), Nsim), 
-                           streams=streamsGpu, Nglobal=c(128,128),
+                           streams=streamsGpu, Nglobal=c(64,128),
                            type = theType)
 ```
 
@@ -231,12 +239,12 @@ gpuBatchMatrix::multiplyLowerDiagonalBatch(
   outputChol, diagMat, zMatGpu, simMat, 
   diagIsOne = TRUE, # diagonal of L is one
   transformD = "sqrt", # take the square root of each element of D
-  Nglobal = c(128,8,16),#c(32,32,4),#c(64,8,8), # rows, columns, matrix
+  Nglobal = c(128,8,8),#c(32,32,4),#c(64,8,8), # rows, columns, matrix
   Nlocal = c(32,8,1),#c(8,8,1),  # anything, anything 1
   NlocalCache = 5000)
 
 
-D=1
+D=2
 resGpu = simMat[seq( (D-1) * ncol(outputBatchF)+1, len=ncol(outputBatchF)),]
 chol4gpu = as.matrix(outputChol[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
 chol4gpu[upper.tri(chol4gpu)] = 0
