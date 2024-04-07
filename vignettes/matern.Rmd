@@ -189,7 +189,6 @@ as.matrix(diagMat)[,1:4]
 #### check chol gpu results 
 D=2
 
-
 theMaternGpu = as.matrix(outputBatchF[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
 dim(theMaternGpu)
 chol4gpu = as.matrix(outputChol[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
@@ -295,7 +294,7 @@ quantile(resGpu - resCpu)
 ```
 
 ```{r checkMultiplyLower, eval=TRUE}
-D=1
+D=2
 resGpu = simMat[seq( (D-1) * ncol(outputBatchF)+1, len=ncol(outputBatchF)),]
 theMaternGpu = as.matrix(outputBatchF[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
 fromGpuOrig = chol4gpu = as.matrix(outputChol[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
@@ -315,7 +314,7 @@ quantile(resGpu - resCpu)
 theNames = apply(expand.grid('par',1:nrow(paramsGpu), 'sim', 1:Nsim), 1, paste, collapse='')
 ```
 
-```{r plotSimSetup, eval = F}
+```{r plotSimSetup, eval = T}
 if(requireNamespace('terra', quietly=TRUE)) {
 simRaster = rast(myRaster, 
   nlyrs = ncol(simMat)*nrow(paramsGpu))
@@ -326,13 +325,12 @@ names(simRaster) = theNames
 }
 ```
 
-```{r plotSim, fig.height=5, fig.width=4, out.width="paste0(98/nrow(paramsGpu), '%')", fig.cap='simulations', fig.subcap = 'theNames', eval = F}
+```{r plotSim, fig.height=5, fig.width=4, out.width="paste0(98/nrow(paramsGpu), '%')", fig.cap='simulations', fig.subcap = 'theNames',eval = TRUE}
 par(mar=rep(0.1, 4))
 for(D in names(simRaster)) {
   plot(terra::ext(simRaster))
   plot(simRaster[[D]], legend=FALSE, add=TRUE)
 }
-  
 ```
 
 
@@ -354,18 +352,13 @@ gpuBatchMatrix:::backsolveBatch(
   Nlocal = NlocalChol,
   NlocalCache = 3000)
 
-NglobalChol
-NlocalChol
-NglobalChol/NlocalChol
-
-as.matrix(simMat[1:12,])
 
 as.matrix(solveMat[1:12,])
 
 L = as.matrix(outputChol[1:ncol(outputChol), ])
 L[!lower.tri(L, diag=TRUE)] = 0
 diag(L) = 1
-L[1:4,1:4]
+#L[1:4,1:4]
 
 solve(L, as.matrix(simMat[1:ncol(outputChol),]))[1:12, ]
 
