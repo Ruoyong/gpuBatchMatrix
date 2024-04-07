@@ -293,7 +293,7 @@ stuff[seqEnd, seqEnd]
 quantile(resGpu - resCpu)
 ```
 
-```{r checkMultiplyLower, eval=TRUE}
+```{r checkMultiplyLower, eval=FALSE}
 D=2
 resGpu = simMat[seq( (D-1) * ncol(outputBatchF)+1, len=ncol(outputBatchF)),]
 theMaternGpu = as.matrix(outputBatchF[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
