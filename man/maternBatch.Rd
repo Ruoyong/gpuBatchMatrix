@@ -7,19 +7,19 @@
 maternBatch(param, coords, var, Nglobal, Nlocal, startrow, numberofrows)
 }
 \arguments{
-\item{param}{a vclMatrix containing batches of parameters, each row represents a set of parameters}
+\item{param}{a vclMatrix containing batches of parameters, each row represents a set of parameters.}
 
-\item{coords}{a vclMatrix of the coordinates on GPU}
+\item{coords}{a vclMatrix of the coordinates on GPU.}
 
-\item{var}{a vclMatrix of the output Matérn matrices in batches}
+\item{var}{a vclMatrix of the output Matérn matrices in batches.}
 
-\item{Nglobal}{a vector specifying number of global index space}
+\item{Nglobal}{a vector specifying number of global index space.}
 
-\item{Nlocal}{a vector specifying number of local work items}
+\item{Nlocal}{a vector specifying number of local work items.}
 
-\item{startrow}{an integer specifying the starting row of parameter matrix}
+\item{startrow}{an integer specifying the starting row of parameter matrix.}
 
-\item{numberofrows}{an integer specifying number of rows of the param to use}
+\item{numberofrows}{an integer specifying number of rows of the param to use.}
 }
 \value{
 this function returns nothing, it modifies the input var in place.

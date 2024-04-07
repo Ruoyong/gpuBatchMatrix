@@ -17,30 +17,30 @@ cholBatch(
 )
 }
 \arguments{
-\item{A}{a vclMatrix containing positive definite matrices in batches}
+\item{A}{a vclMatrix containing positive definite matrices in batches.}
 
-\item{D}{a vclMatrix where each row contains the diagonal elements of D'}
+\item{D}{a vclMatrix where each row contains the diagonal elements of D'.}
 
-\item{numbatchD}{number of batches in A}
+\item{numbatchD}{number of batches in A.}
 
-\item{Nglobal}{a vector specifying number of global index space}
+\item{Nglobal}{a vector specifying number of global index space.}
 
-\item{Nlocal}{a vector specifying number of local work items}
+\item{Nlocal}{a vector specifying number of local work items.}
 
-\item{NlocalCache}{an integer specifying amount of local memory to cache}
+\item{NlocalCache}{an integer specifying amount of local memory to cache.}
 
-\item{Astartend}{a vector specifying the range of A, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0}
+\item{Astartend}{a vector specifying the range of A, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0.}
 
-\item{Dstartend}{a vector specifying the range of D}
+\item{Dstartend}{a vector specifying the range of D.}
 
-\item{verbose}{a logical value, if TRUE, print extra information, default is FALSE}
+\item{verbose}{a logical value, if TRUE, print extra information, default is FALSE.}
 }
 \value{
 this function returns nothing, it modifies the input `vclMatrix' A and D in place.
 }
 \description{
-Performs Cholesky decomposition in parallel batches on a GPU, solving A = L D' L^t
+Performs Cholesky decomposition in parallel batches on a GPU, solving A = L D' L^t.
 }
 \note{
-the computed L and D' are stored in A and D respectively, no objects are returned
+the computed L and D' are stored in A and D respectively, no objects are returned.
 }

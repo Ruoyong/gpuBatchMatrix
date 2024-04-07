@@ -18,25 +18,25 @@ crossprodBatch(
 )
 }
 \arguments{
-\item{C}{a vclMatrix containing square matrices batches}
+\item{C}{a vclMatrix containing square matrices batches.}
 
-\item{A}{a vclMatrix containing rectangular matrix batches}
+\item{A}{a vclMatrix containing rectangular matrix batches.}
 
-\item{D}{a vclMatrix where rows are diagonals of D' stacked row-wise}
+\item{D}{a vclMatrix where rows are diagonals of D' stacked row-wise.}
 
-\item{invertD}{a logical value, if TRUE, C = t(A) D^(-1) A}
+\item{invertD}{a logical value, if TRUE, C = t(A) D^(-1) A.}
 
-\item{Nglobal}{a vector specifying number of global work items}
+\item{Nglobal}{a vector specifying number of global work items.}
 
-\item{Nlocal}{a vector specifying number of local work items}
+\item{Nlocal}{a vector specifying number of local work items.}
 
 \item{NlocalCache}{an integer specifying amount of local memory to cache.}
 
-\item{Cstartend}{a vector (startrow, nRow, startcol,nCol) that specifying the range of each submatrix in C}
+\item{Cstartend}{a vector (startrow, nRow, startcol,nCol) that specifying the range of each submatrix in C.}
 
-\item{Astartend}{a vector (startrow, nRow, startcol,nCol) that specifying the range of each submatrix in A}
+\item{Astartend}{a vector (startrow, nRow, startcol,nCol) that specifying the range of each submatrix in A.}
 
-\item{Dstartend}{a vector (startrow, nRow, startcol,nCol) that specifying the range of each submatrix in D}
+\item{Dstartend}{a vector (startrow, nRow, startcol,nCol) that specifying the range of each submatrix in D.}
 }
 \value{
 this function returns nothing, it modifies the input vclMatrix C in place.
@@ -45,5 +45,5 @@ this function returns nothing, it modifies the input vclMatrix C in place.
 Computes C = t(A) A or t(A) D' A or t(A) D'^(-1) A in parallel batches on a GPU.
 }
 \note{
-The computed results are stored in C, no objects are returned
+The computed results are stored in C, no objects are returned.
 }
