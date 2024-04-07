@@ -1,9 +1,9 @@
 Package: gpuBatchMatrix
 Version: 0.2
 Date: 2019-09-14
-Title: matrices operations in batches with GPU
-Author: Patrick Brown, Ruoyong Xu
-Description: matrices operations in batches on GPU in R
+Title: Batch Matrix Operations with GPU Acceleration 
+Author: Ruoyong Xu, Patrick Brown
+Description: Matrices operations in parallel batches accelerated with GPU
 Maintainer: Ruoyong Xu <ruoyong.xu@mail.utoronto.ca>
 License: GPL (>= 3)
 Encoding: UTF-8
