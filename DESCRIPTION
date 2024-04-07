@@ -3,7 +3,7 @@ Version: 0.2
 Date: 2019-09-14
 Title: Batch Matrix Operations with GPU Acceleration 
 Author: Ruoyong Xu, Patrick Brown
-Description: Matrices operations in parallel batches accelerated with GPU
+Description: Perform various matrix operations in parallel batches accelerated with GPU in R.
 Maintainer: Ruoyong Xu <ruoyong.xu@mail.utoronto.ca>
 License: GPL (>= 3)
 Encoding: UTF-8
