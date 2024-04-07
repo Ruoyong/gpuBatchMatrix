@@ -293,7 +293,7 @@ stuff[seqEnd, seqEnd]
 quantile(resGpu - resCpu)
 ```
 
-```{r checkMultiplyLower, eval=FALSE}
+```{r checkMultiplyLower, eval=TRUE}
 D=2
 resGpu = simMat[seq( (D-1) * ncol(outputBatchF)+1, len=ncol(outputBatchF)),]
 theMaternGpu = as.matrix(outputBatchF[seq(1+(D-1)*nrow(coordsGpu), len=nrow(coordsGpu)),])
@@ -310,15 +310,15 @@ quantile(resGpu - resCpu)
 
 
 # Plot simulated materns
-```{r plotSimNames}
+```{r plotSimNames, eval=TRUE}
 theNames = apply(expand.grid('par',1:nrow(paramsGpu), 'sim', 1:Nsim), 1, paste, collapse='')
 ```
 
 ```{r plotSimSetup, eval = T}
 if(requireNamespace('terra', quietly=TRUE)) {
-simRaster = rast(myRaster, 
+simRaster = terra::rast(myRaster, 
   nlyrs = ncol(simMat)*nrow(paramsGpu))
-system.time(values(simRaster) <- as.vector(as.matrix(simMat)))
+system.time(terra::values(simRaster) <- as.vector(as.matrix(simMat)))
 names(simRaster) = theNames
 } else {
   simRaster = NULL
@@ -327,9 +327,11 @@ names(simRaster) = theNames
 
 ```{r plotSim, fig.height=5, fig.width=4, out.width="paste0(98/nrow(paramsGpu), '%')", fig.cap='simulations', fig.subcap = 'theNames',eval = TRUE}
 par(mar=rep(0.1, 4))
+if(!is.null(simRaster)) {
 for(D in names(simRaster)) {
-  plot(terra::ext(simRaster))
-  plot(simRaster[[D]], legend=FALSE, add=TRUE)
+  terra::plot(terra::ext(simRaster))
+  terra::plot(simRaster[[D]], legend=FALSE, add=TRUE)
+}
 }
 ```
 
@@ -338,8 +340,7 @@ for(D in names(simRaster)) {
 outputChol a = cbind(Y, 1), solve for a
 
 # Backsolve
-
-```{r backsolve, echo=TRUE, eval=F}
+```{r backsolve, echo=TRUE, eval=FALSE}
   
 #solveMat = -99 +0*simMat
 solveMat=vclMatrix(0, nrow(simMat),ncol(simMat),type=gpuR::typeof(outputChol))
@@ -393,7 +394,7 @@ as.matrix(outputSwissRain)
 ```
 # extra info
 
-```{r gpuInfo, echo=TRUE, eval=FALSE}
+```{r gpuInfo, echo=TRUE, eval=TRUE}
 gpuR::gpuInfo()
 ```
 
