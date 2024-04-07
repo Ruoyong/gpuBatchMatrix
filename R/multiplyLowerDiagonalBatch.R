@@ -10,8 +10,8 @@
 #' @param Nlocal the work group size of the index space 
 #' @param NlocalCache a integer number
 #' 
-#' @return returns nothing, this function modifies the input "vclMatrix" output in place.
-#' 
+#' @return this function returns nothing, it modifies the input `vclMatrix' output in place.
+#' @note the computed results are stored in `output'.
 #' @useDynLib gpuBatchMatrix
 #' @export
 
@@ -21,11 +21,11 @@
 
 
 multiplyLowerDiagonalBatch <- function(L, D, B, output,# output = L  D B, L lower triangular, D diagonal
-                      diagIsOne, # diagonal of L is one
-                      transformD, 
-                      Nglobal,
-                      Nlocal,
-                      NlocalCache){
+                                diagIsOne, # diagonal of L is one
+                                transformD, 
+                                Nglobal,
+                                Nlocal,
+                                NlocalCache){
   
   if(missing(output)) {
     output = vclMatrix(0, nrow(L), ncol(B), 

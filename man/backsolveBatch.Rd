@@ -22,13 +22,13 @@ backsolveBatch(
 \arguments{
 \item{C}{an object of class 'vclMatrix'}
 
-\item{A}{an object of class 'vclMatrix', upper triangular values are 0}
+\item{A}{an object of class 'vclMatrix', with upper triangular values 0}
 
-\item{B}{an object of class 'vclMatrix', batches of rectangular matrices}
+\item{B}{an object of class 'vclMatrix', consists of batches of rectangular matrices}
 
-\item{numbatchB}{number of batches in B, if 1 then B has the same matrix for all matrices in A batch}
+\item{numbatchB}{number of batches in B. If 1, B uses a single matrix for all matrix batches in A.}
 
-\item{diagIsOne}{logical, indicates if all the diagonal entries in A matrices are 1}
+\item{diagIsOne}{a logical value, if TRUE, all the diagonal entries in matrices in A are 1}
 
 \item{Nglobal}{Size of the index space for use}
 
@@ -42,10 +42,13 @@ backsolveBatch(
 
 \item{Bstartend}{a vector that selects the range of B}
 
-\item{verbose}{if TRUE, print out more information}
+\item{verbose}{a logical value, if TRUE, print extra information, default is FALSE}
+}
+\value{
+returns nothing, this function modifies the input "vclMatrix" C in place.
 }
 \description{
-solve A * C = B for C on a GPU, where A, B, C are batches of square matrices
+solve A * C = B for C on a GPU, where A, B and C are batches of square matrices of class 'vclMatrix'
 }
 \note{
 result matrices are stored in C respectively, no returned objects

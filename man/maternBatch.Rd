@@ -7,23 +7,26 @@
 maternBatch(param, coords, var, Nglobal, Nlocal, startrow, numberofrows)
 }
 \arguments{
-\item{param}{a vclMatrix on GPU, matrix of paramters in batches, each row is a set of parameters}
+\item{param}{a vclMatrix containing batches of parameters, each row represents a set of parameters}
 
-\item{coords}{a vclMatrix on GPU, rectangular matrix batches}
+\item{coords}{a vclMatrix of the coordinates on GPU}
 
-\item{var}{a vclMatrix on GPU, consists of the output matern matrices in batches}
+\item{var}{a vclMatrix of the output Matérn matrices in batches}
 
-\item{Nglobal}{vector of number of global work items}
+\item{Nglobal}{a vector specifying number of global index space}
 
-\item{Nlocal}{vector of number of local work items}
+\item{Nlocal}{a vector specifying number of local work items}
 
-\item{startrow}{starting row of parameter matrix}
+\item{startrow}{an integer specifying the starting row of parameter matrix}
 
-\item{numberofrows}{number of rows for computation}
+\item{numberofrows}{an integer specifying number of rows of the param to use}
+}
+\value{
+this function returns nothing, it modifies the input var in place.
 }
 \description{
-computes matern covariance matrices in batches on a GPU
+Computes Matérn covariance matrices in parallel batches on a GPU.
 }
 \note{
-computed results are stored in var
+the computed results are stored in `var'.
 }

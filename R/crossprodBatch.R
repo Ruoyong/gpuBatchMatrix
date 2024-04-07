@@ -1,18 +1,18 @@
 #' @title crossprodBatch
-#' @description computes C = t(A) A or t(A) D' A or t(A) D'^(-1) A in parallel batches on a GPU
-#' @param C a vclMatrix on GPU, square matrices batches
-#' @param A a vclMatrix on GPU, rectangular matrix batches
-#' @param D a vclMatrix on GPU, rectangular matrix batches, rows are diagonals of D', stacked row-wise 
-#' @param invertD set to 1 for C = t(A) D^(-1) A
-#' @param Nglobal vector of number of global work items
-#' @param Nlocal vector of number of local work items
-#' @param NlocalCache elements in local cache
-#' @param Cstartend a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in C
-#' @param Astartend a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in A
-#' @param Dstartend a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in D
+#' @description Computes C = t(A) A or t(A) D' A or t(A) D'^(-1) A in parallel batches on a GPU.
+#' @param C a vclMatrix containing square matrices batches
+#' @param A a vclMatrix containing rectangular matrix batches
+#' @param D a vclMatrix where rows are diagonals of D' stacked row-wise 
+#' @param invertD a logical value, if TRUE, C = t(A) D^(-1) A
+#' @param Nglobal a vector specifying number of global work items
+#' @param Nlocal a vector specifying number of local work items
+#' @param NlocalCache an integer specifying amount of local memory to cache.
+#' @param Cstartend a vector (startrow, nRow, startcol,nCol) that specifying the range of each submatrix in C
+#' @param Astartend a vector (startrow, nRow, startcol,nCol) that specifying the range of each submatrix in A
+#' @param Dstartend a vector (startrow, nRow, startcol,nCol) that specifying the range of each submatrix in D
 #' 
-#' @return returns nothing, this function modifies the input "vclMatrix" C in place.
-#' @note computed results are stored in C, no returned objects
+#' @return this function returns nothing, it modifies the input vclMatrix C in place.
+#' @note The computed results are stored in C, no objects are returned
 #' @useDynLib gpuBatchMatrix
 #' @export
 

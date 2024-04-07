@@ -17,24 +17,30 @@ multiplyLowerDiagonalBatch(
 )
 }
 \arguments{
-\item{L}{lower triangular matrices in batches}
+\item{L}{a `vclMatrix' consists of batches of lower triangular matrices}
 
-\item{D}{diagonal matrices in batches, each row contains diagonal elements of D'}
+\item{D}{a `vclMatrix' consists of diagonal matrices in batches, each row is one batch contains diagonal elements of D^T}
 
-\item{B}{matrices in batches}
+\item{B}{a `vclMatrix' consists of matrices in batches}
 
-\item{output}{the result of LD'B}
+\item{output}{a `vclMatrix' which is the result of LD'B}
 
-\item{diagIsOne}{logical, whether the diagonal of L is one}
+\item{diagIsOne}{a logical value indicating whether the diagonal of L is one}
 
-\item{transformD}{how to transform D, can be any OpenCL C built-in math function}
+\item{transformD}{a character string specifying how to transform D, can be any OpenCL C built-in math function}
 
 \item{Nglobal}{the size of the index space for use}
 
 \item{Nlocal}{the work group size of the index space}
 
-\item{NlocalCache}{a number}
+\item{NlocalCache}{a integer number}
+}
+\value{
+this function returns nothing, it modifies the input `vclMatrix' output in place.
 }
 \description{
-computes output = LD'B in batches on a GPU
+Computes output = LD^T B in parallel batches on a GPU
+}
+\note{
+the computed results are stored in `output'.
 }

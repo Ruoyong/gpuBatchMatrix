@@ -878,7 +878,7 @@ SEXP multiplyLowerBatchTyped(
 
 
 
-//' Multiply lower triangular matrices
+ //' Multiply lower triangular matrices
  //' 
  //' Multiplies a lower triangular matrix by a rectangular matrix
  //'

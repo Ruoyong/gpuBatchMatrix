@@ -201,6 +201,7 @@ length(diagGpu)
 Sprob = c(0,0.01, 0.1, 0.5)
 Sprob = sort(unique(c(Sprob, 1-Sprob)))
 
+
 ## first check
 maternReconstruct = chol4gpu %*% diag(diagGpu) %*% t(chol4gpu)
 quantile(maternReconstruct - theMaternGpu, prob=Sprob)
@@ -212,6 +213,7 @@ maternCpu = geostatsp::matern(
     x=coordsSp,
     param=drop(myParamsBatch[D,1:7]))
 quantile(maternReconstruct - maternCpu, prob=Sprob)
+
 
 ## third check
 cholCpu = geostatsp::matern(
@@ -252,9 +254,6 @@ if(requireNamespace("clrng", quietly = TRUE)) {
   zMatGpu = vclMatrix(zMatCpu, type=theType)
 }
 ```
-
-
-
 
 
 compute U = L D^(1/2) Z, where LDLt is the Cholesky of the variance matrix, Z is the independent normals
@@ -314,7 +313,7 @@ quantile(resGpu - resCpu)
 theNames = apply(expand.grid('par',1:nrow(paramsGpu), 'sim', 1:Nsim), 1, paste, collapse='')
 ```
 
-```{r plotSimSetup, eval = T}
+```{r plotSimSetup, eval = TRUE}
 if(requireNamespace('terra', quietly=TRUE)) {
 simRaster = terra::rast(myRaster, 
   nlyrs = ncol(simMat)*nrow(paramsGpu))

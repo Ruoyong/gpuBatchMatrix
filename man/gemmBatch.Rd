@@ -13,37 +13,44 @@ gemmBatch(
   submatrixB,
   submatrixC,
   batches,
-  workgroupSize,
+  Nglobal,
   NlocalCache,
   verbose = FALSE
 )
 }
 \arguments{
-\item{A}{a "vclMatrix" consists of batches of matrices}
+\item{A}{a "vclMatrix" containing batches of matrices}
 
-\item{B}{a "vclMatrix" consists of batches of matrices}
+\item{B}{a "vclMatrix" containing batches of matrices}
 
-\item{C}{a "vclMatrix" consists of batches of matrices}
+\item{C}{a "vclMatrix" containing batches of matrices}
 
-\item{transposeABC}{a vector of 1 or 0, 1 indicates transpose the matrices, e.g., c(0,0,0)}
+\item{transposeABC}{a vector of 1 or 0, where 1 indicates transpose the corresponding matrices, e.g., c(0,0,0)}
 
-\item{submatrixA}{a vector that indicates the range of each submatrix of A, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)}
+\item{submatrixA}{a vector specifying the range of each submatrix of A, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)}
 
-\item{submatrixB}{a vector that indicates the range of each submatrix of B, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)}
+\item{submatrixB}{a vector specifying the range of each submatrix of B, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)}
 
-\item{submatrixC}{a vector that indicates the range of each submatrix of C, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)}
+\item{submatrixC}{a vector specifying the range of each submatrix of C, c(rowStart, nRowsSub, nRowsTotal, colStart, nColsSub, nColsTotal)}
 
-\item{batches}{a vector that contains c(nRowBatch, nColBatch, recycleArow, recycleAcol, recycleBrow, recycleBcol), recycleArow=1 indicates there are no row batches for A, use the same A for all batches}
+\item{batches}{a vector containing parameters: 
+c(nRowBatch, nColBatch, recycleArow, recycleAcol, recycleBrow, recycleBcol), 
+where recycleArow = 1 indicates no row batches for A (use the same A for all batches)}
 
-\item{workgroupSize}{vector of six numbers, number of global work items and local work items,}
+\item{Nglobal}{a vector of six numbers specifying number of global work items and local work items}
 
-\item{NlocalCache}{a vector, c(cacheSizeA, cacheSizeB)}
+\item{NlocalCache}{a vector: c(cacheSizeA, cacheSizeB)}
 
-\item{verbose}{if TRUE, print out more information}
+\item{verbose}{a logical value, if TRUE, print extra information, default is FALSE}
+}
+\value{
+this function returns nothing, it modifies the input "vclMatrix" C in place.
 }
 \description{
-Multiplies a rectangular matrix by a rectangular matrix in row and column batches
+Multiplies rectangular matrices A and B in row and column 
+parallel batches to compute C = A B or C = t(A) B or C = A t(B) on a GPU
 }
 \note{
-computed results are stored in C, no returned objects, if A and B have different row batches, then one of them must have only 1 row batch
+computed results are stored in C, no objects are returned.
+If A and B have different numbers of row batches, then one of their row batch numbers must be 1.
 }

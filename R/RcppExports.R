@@ -33,9 +33,6 @@ maternBatchBackend <- function(var, coords, param, Nglobal, Nlocal, startrow, nu
     invisible(.Call('_gpuBatchMatrix_maternBatchBackend', PACKAGE = 'gpuBatchMatrix', var, coords, param, Nglobal, Nlocal, startrow, numberofrows, verbose))
 }
 
-#' Multiply lower triangular matrices
-NULL
-
 multiplyLowerDiagonalBatchBackend <- function(output, L, D, B, diagIsOne, transformD, Nglobal, Nlocal, NlocalCache) {
     .Call('_gpuBatchMatrix_multiplyLowerDiagonalBatchBackend', PACKAGE = 'gpuBatchMatrix', output, L, D, B, diagIsOne, transformD, Nglobal, Nlocal, NlocalCache)
 }

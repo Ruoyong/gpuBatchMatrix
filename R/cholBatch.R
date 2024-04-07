@@ -1,17 +1,17 @@
 #' @title cholBatch
-#' @description performs Cholesky decomposition in parallel batches on a GPU, solving A = L D' L^t 
-#' @param A a vclMatrix on GPU, positive definite
-#' @param D a vclMatrix on GPU, each row contains diagonal elements of D' 
+#' @description Performs Cholesky decomposition in parallel batches on a GPU, solving A = L D' L^t 
+#' @param A a vclMatrix containing positive definite matrices in batches
+#' @param D a vclMatrix where each row contains the diagonal elements of D' 
 #' @param numbatchD number of batches in A
-#' @param Nglobal Size of the index space for use
-#' @param Nlocal Work group size of the index space
-#' @param NlocalCache local memory cached
-#' @param Astartend a vector that selects the range of A, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0
-#' @param Dstartend a vector that selects the range of D
+#' @param Nglobal a vector specifying number of global index space
+#' @param Nlocal a vector specifying number of local work items
+#' @param NlocalCache an integer specifying amount of local memory to cache
+#' @param Astartend a vector specifying the range of A, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0
+#' @param Dstartend a vector specifying the range of D
 #' @param verbose a logical value, if TRUE, print extra information, default is FALSE
 #' 
-#' @return returns nothing, this function modifies the input "vclMatrix" A and D in place.
-#' @note computed L and D' are stored in A and D respectively, no returned objects
+#' @return this function returns nothing, it modifies the input `vclMatrix' A and D in place.
+#' @note the computed L and D' are stored in A and D respectively, no objects are returned
 #' @useDynLib gpuBatchMatrix
 #' @import gpuR
 #' @export
