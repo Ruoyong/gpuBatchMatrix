@@ -1,14 +1,16 @@
 #' @title cholBatch
-#' @description performs Cholesky decomposition in batches on A = L D' L^t on a GPU
+#' @description performs Cholesky decomposition in parallel batches on a GPU, solving A = L D' L^t 
 #' @param A a vclMatrix on GPU, positive definite
 #' @param D a vclMatrix on GPU, each row contains diagonal elements of D' 
-#' @param numbatchD number of batches
+#' @param numbatchD number of batches in A
 #' @param Nglobal Size of the index space for use
 #' @param Nlocal Work group size of the index space
 #' @param NlocalCache local memory cached
 #' @param Astartend a vector that selects the range of A, c(startrow, numberofrows, startcolumn, numberofcols), row starts from 0
 #' @param Dstartend a vector that selects the range of D
-#' @param verbose if TRUE, print out more information
+#' @param verbose a logical value, if TRUE, print extra information, default is FALSE
+#' 
+#' @return returns nothing, this function modifies the input "vclMatrix" A and D in place.
 #' @note computed L and D' are stored in A and D respectively, no returned objects
 #' @useDynLib gpuBatchMatrix
 #' @import gpuR

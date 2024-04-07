@@ -1,5 +1,5 @@
 #' @title gemmBatch
-#' @description Multiplies a rectangular matrix by a rectangular matrix in row and column batches
+#' @description Multiplies a rectangular matrix A by a rectangular matrix B in row and column parallel batches
 #' @param A a "vclMatrix" consists of batches of matrices
 #' @param B a "vclMatrix" consists of batches of matrices
 #' @param C a "vclMatrix" consists of batches of matrices
@@ -10,8 +10,11 @@
 #' @param batches a vector that contains c(nRowBatch, nColBatch, recycleArow, recycleAcol, recycleBrow, recycleBcol), recycleArow=1 indicates there are no row batches for A, use the same A for all batches
 #' @param workgroupSize vector of six numbers, number of global work items and local work items,
 #' @param NlocalCache a vector, c(cacheSizeA, cacheSizeB)
-#' @param verbose if TRUE, print out more information
-#' @note computed results are stored in C, no returned objects, if A and B have different row batches, then one of them must have only 1 row batch 
+#' @param verbose a logical value, if TRUE, print extra information, default is FALSE
+#' 
+#' @return returns nothing, this function modifies the input "vclMatrix" C in place.
+#' @note computed results are stored in C, no returned objects.
+#' If A and B have different number of row batches, then one of them's row batch number must be 1.
 #' @useDynLib gpuBatchMatrix
 #' @export
 

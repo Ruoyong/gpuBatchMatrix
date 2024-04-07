@@ -6,7 +6,6 @@
 
 ```{r test}
 library(gpuBatchMatrix)
-library(gpuR)
 type="double"
 nrow<-8
 ncol<-10

@@ -7,7 +7,6 @@
 
 ## backsolve function test
 ```{r  test_check}
-library('gpuR')
 library("gpuBatchMatrix")
 Nglobal = c(64L, 64L, 4L)
 Nlocal = c(4L, 4L, 4L)

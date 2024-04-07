@@ -1,14 +1,16 @@
 #' @title multiplyLowerDiagonalBatch
-#' @description computes output = LD'B in batches on a GPU
-#' @param L  lower triangular matrices in batches
-#' @param D  diagonal matrices in batches, each row contains diagonal elements of D' 
-#' @param B  matrices in batches
-#' @param diagIsOne logical, whether the diagonal of L is one 
-#' @param transformD how to transform D, can be any OpenCL C built-in math function
-#' @param output the result of LD'B
+#' @description Computes output = LD^T B in parallel batches on a GPU
+#' @param L  a `vclMatrix' consists of batches of lower triangular matrices 
+#' @param D  a `vclMatrix' consists of diagonal matrices in batches, each row is one batch contains diagonal elements of D^T
+#' @param B  a `vclMatrix' consists of matrices in batches
+#' @param diagIsOne a logical value indicating whether the diagonal of L is one 
+#' @param transformD a character string specifying how to transform D, can be any OpenCL C built-in math function
+#' @param output a `vclMatrix' which is the result of LD'B
 #' @param Nglobal the size of the index space for use
 #' @param Nlocal the work group size of the index space 
-#' @param NlocalCache a number
+#' @param NlocalCache a integer number
+#' 
+#' @return returns nothing, this function modifies the input "vclMatrix" output in place.
 #' 
 #' @useDynLib gpuBatchMatrix
 #' @export

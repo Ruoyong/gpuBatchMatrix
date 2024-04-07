@@ -1,5 +1,5 @@
 #' @title maternBatch 
-#' @description computes matern covariance matrices in batches on a GPU
+#' @description computes matern covariance matrices in parallel batches on a GPU
 #' @param var a vclMatrix on GPU, consists of the output matern matrices in batches
 #' @param coords a vclMatrix on GPU, rectangular matrix batches
 #' @param param a vclMatrix on GPU, matrix of paramters in batches, each row is a set of parameters 
@@ -7,6 +7,8 @@
 #' @param Nlocal vector of number of local work items
 #' @param startrow starting row of parameter matrix
 #' @param numberofrows number of rows for computation
+#' 
+#' @return returns nothing, this function modifies the input "vclMatrix" var in place.
 #' @note computed results are stored in var
 #' @useDynLib gpuBatchMatrix
 #' @export

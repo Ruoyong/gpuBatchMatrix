@@ -5,8 +5,7 @@
 
 
 ```{r packages}
-   library(gpuR)
-   library(gpuBatchMatrix)
+library(gpuBatchMatrix)
 ```
 
 
@@ -27,7 +26,7 @@ zmat = matrix(stats::rnorm(5*2), ncol=2)
 
 outputcpu <- L %*% sqrt(diagmat) %*% zmat
 outputcpu
-#######################GPU##############################################
+####################### GPU ##############################################
 output <- vclMatrix(0, nrow=5, ncol=2, type=type)
 Lg <- vclMatrix(L, type=type)
 diagg <- vclMatrix(diag(diagmat), nrow=1, ncol=5, type=type)

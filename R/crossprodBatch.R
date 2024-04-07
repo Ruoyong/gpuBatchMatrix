@@ -1,5 +1,5 @@
 #' @title crossprodBatch
-#' @description computes C = t(A) A or t(A) D' A or t(A) D'^(-1) A in batches on a GPU
+#' @description computes C = t(A) A or t(A) D' A or t(A) D'^(-1) A in parallel batches on a GPU
 #' @param C a vclMatrix on GPU, square matrices batches
 #' @param A a vclMatrix on GPU, rectangular matrix batches
 #' @param D a vclMatrix on GPU, rectangular matrix batches, rows are diagonals of D', stacked row-wise 
@@ -10,6 +10,8 @@
 #' @param Cstartend a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in C
 #' @param Astartend a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in A
 #' @param Dstartend a vector (startrow, nRow, startcol,nCol) that indicates the selected part of each submatrix in D
+#' 
+#' @return returns nothing, this function modifies the input "vclMatrix" C in place.
 #' @note computed results are stored in C, no returned objects
 #' @useDynLib gpuBatchMatrix
 #' @export
