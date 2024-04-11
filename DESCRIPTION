@@ -6,7 +6,8 @@ Description: Perform various matrix operations in parallel batches accelerated w
 Authors@R: c(
       person(given="Ruoyong", family="Xu", 
                     role = c("aut", "cre", "ctb"),
-                     email = "ruoyong.xu@mail.utoronto.ca"
+                     email = "ruoyong.xu@mail.utoronto.ca",
+                     comment = c(ORCID = '0000-0003-3474-8183')
                      ),
       person("Patrick", "Brown", 
                      email = "patrick.borgnine@gmail.com",
